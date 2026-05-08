@@ -340,7 +340,7 @@ function Capa() {
           <div className="capa-empresa-ico">★</div>
           <div>
             <div className="capa-empresa-detalhe">Apresentado para</div>
-            <div className="capa-empresa-nome">Nome da Empresa Cliente</div>
+            <div className="capa-empresa-nome">Grupo SA</div>
           </div>
         </div>
       </div>
