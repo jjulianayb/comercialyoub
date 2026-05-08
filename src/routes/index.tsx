@@ -765,7 +765,7 @@ function Canais() {
 function Sobre() {
   return (
     <section className="sec">
-      <span className="eyebrow">07 — Quem somos</span>
+      <span className="eyebrow">08 — Quem somos</span>
       <h2 className="sec-h">
         A empresa por trás do <span>projeto</span>
       </h2>
