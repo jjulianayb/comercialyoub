@@ -821,7 +821,7 @@ function ProximosPassos() {
   return (
     <section className="sec-dark">
       <div className="sec-inner">
-        <span className="eyebrow eyebrow-light">08 — Próximos passos</span>
+        <span className="eyebrow eyebrow-light">09 — Próximos passos</span>
         <h2 className="sec-h is-light">
           Como avançar <span>a partir daqui</span>
         </h2>
