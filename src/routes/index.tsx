@@ -209,8 +209,43 @@ function Login({ onSuccess }: { onSuccess: () => void }) {
 }
 
 function Proposta() {
+  useEffect(() => {
+    const block = (e: Event) => {
+      e.preventDefault();
+      return false;
+    };
+    const blockKeys = (e: KeyboardEvent) => {
+      const k = e.key.toLowerCase();
+      const mod = e.ctrlKey || e.metaKey;
+      // Bloqueia: copiar, salvar, imprimir, selecionar tudo, ver fonte
+      if (mod && ["c", "s", "p", "a", "u", "x"].includes(k)) {
+        e.preventDefault();
+        return false;
+      }
+      // Bloqueia F12 / DevTools
+      if (k === "f12") {
+        e.preventDefault();
+        return false;
+      }
+    };
+    document.addEventListener("contextmenu", block);
+    document.addEventListener("copy", block);
+    document.addEventListener("cut", block);
+    document.addEventListener("dragstart", block);
+    document.addEventListener("selectstart", block);
+    document.addEventListener("keydown", blockKeys);
+    return () => {
+      document.removeEventListener("contextmenu", block);
+      document.removeEventListener("copy", block);
+      document.removeEventListener("cut", block);
+      document.removeEventListener("dragstart", block);
+      document.removeEventListener("selectstart", block);
+      document.removeEventListener("keydown", blockKeys);
+    };
+  }, []);
+
   return (
-    <div className="proposta">
+    <div className="proposta proposta-locked">
       <Capa />
       <Contexto />
       <Objetivo />
@@ -222,9 +257,41 @@ function Proposta() {
       <ProximosPassos />
       <Rodape />
       <style>{css}</style>
+      <style>{lockCss}</style>
     </div>
   );
 }
+
+const lockCss = `
+.proposta-locked,
+.proposta-locked * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.proposta-locked input,
+.proposta-locked textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+.proposta-locked img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  pointer-events: none;
+}
+.proposta-locked a img { pointer-events: auto; }
+@media print {
+  .proposta-locked { display: none !important; }
+  body::before {
+    content: "Documento confidencial — impressão desabilitada.";
+    display: block; padding: 40px; font-family: sans-serif;
+    font-size: 18px; color: #333;
+  }
+}
+`;
+
 
 /* ───────── Componentes ───────── */
 
