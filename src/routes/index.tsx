@@ -620,11 +620,13 @@ function Investimento() {
             <article key={p.nome} className={`plano ${p.destaque ? "is-destaque" : ""}`}>
               {p.destaque && <span className="plano-badge">★ Recomendado</span>}
               <h3>{p.nome}</h3>
+              <span className="plano-sub">{p.subtitulo}</span>
               <p className="plano-foco">{p.foco}</p>
               <div className="plano-preco">
                 <span className="moeda">R$</span>
                 <span className="valor">{p.valor}</span>
               </div>
+              <span className="plano-prazo">Prazo estimado: {p.prazo}</span>
               <ul className="plano-lista">
                 {p.itens.map((i) => (
                   <li key={i}>{i}</li>
@@ -637,6 +639,10 @@ function Investimento() {
                     <li key={e}>{e}</li>
                   ))}
                 </ul>
+              </div>
+              <div className="plano-diferencial">
+                <span className="etit">Diferencial</span>
+                <p>{p.diferencial}</p>
               </div>
               <a
                 href={WHATSAPP}
