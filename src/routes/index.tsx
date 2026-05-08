@@ -1,5 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import {
+  checkProposalAccess,
+  unlockProposal,
+} from "@/lib/proposal-access.functions";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -10,6 +15,7 @@ export const Route = createFileRoute("/")({
         content:
           "Proposta de Desenvolvimento Humano & Organizacional da youB — diagnóstico, estrutura de cargos, remuneração e dimensionamento.",
       },
+      { name: "robots", content: "noindex, nofollow, noarchive, nosnippet" },
     ],
   }),
   component: Gate,
@@ -18,35 +24,41 @@ export const Route = createFileRoute("/")({
 const WHATSAPP =
   "https://wa.me/5521991417327?text=Ol%C3%A1%2C%20vim%20pela%20proposta%20youB%20e%20gostaria%20de%20falar%20com%20o%20time.";
 
-const ACCESS_PASSWORD = "gruposa123";
-const ACCESS_KEY = "youb_proposta_grupo_sa_access";
-
 function Gate() {
   const [unlocked, setUnlocked] = useState(false);
   const [checked, setChecked] = useState(false);
+  const check = useServerFn(checkProposalAccess);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      try {
-        if (sessionStorage.getItem(ACCESS_KEY) === "1") setUnlocked(true);
-      } catch {}
-    }
-    setChecked(true);
-  }, []);
+    let alive = true;
+    check()
+      .then((r) => {
+        if (alive) setUnlocked(r.unlocked);
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (alive) setChecked(true);
+      });
+    return () => {
+      alive = false;
+    };
+  }, [check]);
 
-  if (!checked) return null;
-  if (!unlocked)
-    return (
-      <Login
-        onSuccess={() => {
-          try {
-            sessionStorage.setItem(ACCESS_KEY, "1");
-          } catch {}
-          setUnlocked(true);
-        }}
-      />
-    );
+  if (!checked) return <GateSkeleton />;
+  if (!unlocked) return <Login onSuccess={() => setUnlocked(true)} />;
   return <Proposta />;
+}
+
+function GateSkeleton() {
+  return (
+    <div
+      style={{
+        minHeight: "100vh",
+        background:
+          "radial-gradient(120% 80% at 80% 0%, #2a0f4d 0%, #15082a 45%, #0a0418 100%)",
+      }}
+    />
+  );
 }
 
 function Login({ onSuccess }: { onSuccess: () => void }) {
@@ -54,19 +66,25 @@ function Login({ onSuccess }: { onSuccess: () => void }) {
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
+  const unlock = useServerFn(unlockProposal);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
     setErr("");
     setLoading(true);
-    setTimeout(() => {
-      if (pwd.trim().toLowerCase() === ACCESS_PASSWORD) {
+    try {
+      const res = await unlock({ data: { password: pwd } });
+      if (res.ok) {
         onSuccess();
       } else {
         setErr("Senha incorreta. Verifique e tente novamente.");
         setLoading(false);
       }
-    }, 500);
+    } catch {
+      setErr("Não foi possível validar agora. Tente novamente em instantes.");
+      setLoading(false);
+    }
   };
 
   const people = [
