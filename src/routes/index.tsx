@@ -129,13 +129,12 @@ function Login({ onSuccess }: { onSuccess: () => void }) {
           <div className="gate-card">
             <div className="gate-tag">Acesso restrito · Confidencial</div>
             <h1 className="gate-title">
-              Proposta preparada<br />
-              <em>exclusivamente para o Grupo SA</em>
+              Bem-vindo à <em>youB</em>
             </h1>
             <p className="gate-sub">
-              Este documento contém estratégia, escopo e investimento desenhados
-              sob medida. Insira a senha enviada pelo seu consultor youB para
-              liberar o acesso.
+              Acesse sua proposta inserindo a senha fornecida abaixo. Este
+              documento foi preparado sob medida e contém estratégia, escopo e
+              investimento pensados para o seu momento.
             </p>
 
             <form onSubmit={submit} className="gate-form" noValidate>
@@ -252,7 +251,9 @@ function Proposta() {
       <Escopo />
       <Metodologia />
       <Cronograma />
+      <ConexaoValor />
       <Investimento />
+      <Canais />
       <Sobre />
       <ProximosPassos />
       <Rodape />
@@ -543,59 +544,62 @@ function Cronograma() {
 
 const PLANOS = [
   {
-    nome: "Plano Essencial",
-    foco: "Diagnóstico estruturado e direcionamento estratégico inicial.",
+    nome: "Plano Core",
+    subtitulo: "Estruturação & Diagnóstico (Fundacional)",
+    foco: "Cumprimento estrito do briefing com agilidade — base sólida para decisões rápidas e geração de confiança.",
     valor: "45.000",
+    prazo: "60 dias",
     itens: [
-      "Pesquisa de clima organizacional com análise consolidada",
-      "Diagnóstico da função de RH com identificação de gaps",
-      "Benchmark inicial de práticas de mercado",
-      "Recomendações estratégicas prioritárias",
-      "Plano de ação inicial para evolução da área de RH",
+      "Pesquisa de Clima Digital — coleta e análise em tempo real via plataforma",
+      "Diagnóstico DHO 360 — auditoria de processos atuais + plano de ação tático",
+      "Survey de Remuneração — comparativo de mercado para MG e PR",
+      "Grade Salarial — estrutura de cargos e salários (150 cargos) com foco em equidade",
     ],
     entregaveis: [
-      "Relatório executivo com principais achados",
-      "Matriz de riscos e oportunidades",
-      "Plano de ação estruturado (curto prazo)",
+      "Relatório executivo com os Top 5 Gaps de retenção",
+      "Tabela salarial estruturada para 150 cargos",
+      "Plano de ação tático priorizado",
     ],
+    diferencial: "Relatório executivo com os Top 5 Gaps de retenção.",
     cta: "Solicitar proposta",
   },
   {
-    nome: "Plano Estratégico",
-    foco: "Estruturação da base organizacional e aumento de eficiência.",
+    nome: "Plano Scale",
+    subtitulo: "Eficiência Operacional (Recomendado)",
+    foco: "Adiciona itens opcionais do briefing e introduz a metodologia de escala — preparando a empresa para o ecossistema youB.",
     valor: "85.000",
+    prazo: "90 dias",
     destaque: true,
     itens: [
-      "Todos os itens do Plano Essencial",
-      "Pesquisa aprofundada de salários, benefícios e práticas de mercado",
-      "Construção de tabela salarial com hierarquização de cargos",
-      "Análise de equidade interna e consistência estrutural",
-      "Apoio na definição de critérios de progressão e movimentação",
+      "Tudo do Plano Core",
+      "Job Description Matrix — descrições modernas focadas em competências",
+      "Dimensionamento (Headcount Planning) — análise qualiquantitativa de quadro",
     ],
     entregaveis: [
-      "Tabela salarial estruturada",
-      "Diretrizes de remuneração e crescimento",
-      "Relatório analítico com recomendações estratégicas ampliadas",
+      "Matriz de descrições de cargos por competência",
+      "Modelo de dimensionamento com recomendações",
+      "Workshop de Liderança Regenerativa para gestores",
     ],
+    diferencial: "Workshop de Liderança Regenerativa alinhando estrutura à cultura desejada.",
     cta: "Escolher este plano",
   },
   {
-    nome: "Plano Completo",
-    foco: "Transformação da estrutura organizacional e máxima eficiência.",
-    valor: "140.000",
+    nome: "Plano Elite",
+    subtitulo: "Ecossistema youB (Parceria Estratégica)",
+    foco: "High-ticket que posiciona a consultoria como alicerce para a implementação da plataforma SaaS youB.",
+    valor: "150.000+",
+    prazo: "120 dias",
     itens: [
-      "Todos os itens do Plano Estratégico",
-      "Desenvolvimento de descrições de cargos detalhadas",
-      "Dimensionamento qualiquantitativo do quadro de pessoal",
-      "Análise de produtividade e eficiência por estrutura",
-      "Recomendações de redesenho organizacional",
-      "Diretrizes para evolução contínua da área de RH",
+      "Tudo do Plano Scale",
+      "Implementação de LMS youB (Trial/Setup) — digitalização dos novos planos de cargo e treinamentos de integração",
+      "Mentoria para o Board — 4 sessões exclusivas com RH e Diretoria",
     ],
     entregaveis: [
-      "Estrutura completa de cargos documentada",
-      "Modelo recomendado de dimensionamento",
-      "Relatório executivo final com visão estratégica de longo prazo",
+      "LMS youB ativo com conteúdos de integração",
+      "Dashboard dinâmico de Dimensionamento dentro do App youB",
+      "Mentoria estratégica recorrente com o Board",
     ],
+    diferencial: "Dimensionamento de Quadro vira dashboard dinâmico no App youB · recorrência de licenciamento SaaS inclusa no pós-projeto.",
     cta: "Solicitar proposta",
   },
 ];
@@ -604,7 +608,7 @@ function Investimento() {
   return (
     <section id="investimento" className="sec-soft">
       <div className="sec-inner">
-        <span className="eyebrow">06 — Investimento</span>
+        <span className="eyebrow">07 — Investimento</span>
         <h2 className="sec-h">
           Escolha o <span>plano ideal</span>
         </h2>
@@ -618,11 +622,13 @@ function Investimento() {
             <article key={p.nome} className={`plano ${p.destaque ? "is-destaque" : ""}`}>
               {p.destaque && <span className="plano-badge">★ Recomendado</span>}
               <h3>{p.nome}</h3>
+              <span className="plano-sub">{p.subtitulo}</span>
               <p className="plano-foco">{p.foco}</p>
               <div className="plano-preco">
                 <span className="moeda">R$</span>
                 <span className="valor">{p.valor}</span>
               </div>
+              <span className="plano-prazo">Prazo estimado: {p.prazo}</span>
               <ul className="plano-lista">
                 {p.itens.map((i) => (
                   <li key={i}>{i}</li>
@@ -635,6 +641,10 @@ function Investimento() {
                     <li key={e}>{e}</li>
                   ))}
                 </ul>
+              </div>
+              <div className="plano-diferencial">
+                <span className="etit">Diferencial</span>
+                <p>{p.diferencial}</p>
               </div>
               <a
                 href={WHATSAPP}
@@ -665,10 +675,97 @@ function Investimento() {
   );
 }
 
+function ConexaoValor() {
+  const blocos = [
+    {
+      n: "01",
+      t: "Diagnóstico vira decisão",
+      d: "Pesquisa de Clima + DHO 360 conectam dados de engajamento, processos e cultura — transformando percepção em mapa acionável de prioridades.",
+    },
+    {
+      n: "02",
+      t: "Estrutura sustenta crescimento",
+      d: "Grade Salarial, Job Description Matrix e Survey de Remuneração criam a coluna vertebral de equidade interna e competitividade externa.",
+    },
+    {
+      n: "03",
+      t: "Dimensionamento gera eficiência",
+      d: "Headcount Planning identifica sub e sobrecarga e libera margem operacional — pagando o investimento com a própria reorganização do quadro.",
+    },
+    {
+      n: "04",
+      t: "Ecossistema mantém o ganho",
+      d: "LMS youB e mentoria de board garantem que a transformação não pare no relatório — vira prática contínua dentro da plataforma.",
+    },
+  ];
+  return (
+    <section className="sec">
+      <span className="eyebrow">06 — Lógica do investimento</span>
+      <h2 className="sec-h">
+        Por que esse investimento <span>se paga</span>
+      </h2>
+      <p className="sec-sub">
+        Cada entrega conecta a próxima. Não é uma soma de produtos avulsos —
+        é uma cadeia de valor desenhada para gerar retorno financeiro,
+        cultural e estratégico mensurável.
+      </p>
+
+      <div className="cv-grid">
+        {blocos.map((b) => (
+          <article key={b.n} className="cv-card">
+            <div className="cv-num">{b.n}</div>
+            <h4>{b.t}</h4>
+            <p>{b.d}</p>
+          </article>
+        ))}
+      </div>
+
+      <div className="cv-roi">
+        <div className="cv-roi-tag">Robustez do trabalho</div>
+        <p>
+          Metodologia proprietária aplicada em <strong>+50 empresas</strong>,
+          desenvolvendo <strong>+5 mil líderes</strong> com{" "}
+          <strong>98% de satisfação</strong>. Entregamos consultoria com a
+          profundidade de uma boutique e a escala de uma plataforma — apoiados
+          por dados, IA e um time multidisciplinar de especialistas em DHO.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function Canais() {
+  return (
+    <section className="canais">
+      <div className="canais-inner">
+        <span className="eyebrow eyebrow-light">Continue a conversa</span>
+        <h3>Vamos avançar quando fizer sentido para você.</h3>
+        <p>
+          Conheça mais sobre nosso ecossistema ou fale diretamente com um
+          consultor youB para ajustar o escopo ao seu momento.
+        </p>
+        <div className="canais-row">
+          <a
+            href="https://www.rhyoub.com.br"
+            target="_blank"
+            rel="noreferrer"
+            className="btn-ghost-light"
+          >
+            Visitar rhyoub.com.br →
+          </a>
+          <a href={WHATSAPP} target="_blank" rel="noreferrer" className="btn-violet">
+            Falar no WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Sobre() {
   return (
     <section className="sec">
-      <span className="eyebrow">07 — Quem somos</span>
+      <span className="eyebrow">08 — Quem somos</span>
       <h2 className="sec-h">
         A empresa por trás do <span>projeto</span>
       </h2>
@@ -724,7 +821,7 @@ function ProximosPassos() {
   return (
     <section className="sec-dark">
       <div className="sec-inner">
-        <span className="eyebrow eyebrow-light">08 — Próximos passos</span>
+        <span className="eyebrow eyebrow-light">09 — Próximos passos</span>
         <h2 className="sec-h is-light">
           Como avançar <span>a partir daqui</span>
         </h2>
@@ -1188,6 +1285,49 @@ footer {
   .capa-cta-row .btn-violet { text-align: center; }
   .sobre-grid { gap: 40px; }
   .fase { gap: 20px; }
+}
+
+/* conexão de valor */
+.cv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 32px; }
+.cv-card {
+  background: #fff; border: 1px solid var(--line);
+  border-radius: 18px; padding: 32px 28px;
+  transition: border-color .18s, transform .18s, box-shadow .18s;
+}
+.cv-card:hover { border-color: var(--v); transform: translateY(-3px); box-shadow: var(--youb-shadow); }
+.cv-num { font-size: 13px; font-weight: 800; color: var(--v); letter-spacing: 0.18em; margin-bottom: 14px; }
+.cv-card h4 { font-size: 18px; font-weight: 700; color: var(--ink); margin: 0 0 10px; letter-spacing: -0.01em; }
+.cv-card p { font-size: 14px; color: var(--ink-soft); line-height: 1.65; margin: 0; }
+.cv-roi {
+  background: linear-gradient(135deg, var(--vsoft) 0%, #fff 100%);
+  border: 1px solid var(--line); border-left: 4px solid var(--v);
+  border-radius: 0 18px 18px 0; padding: 36px 40px;
+}
+.cv-roi-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--v); margin-bottom: 12px; }
+.cv-roi p { font-size: 16px; color: var(--ink); line-height: 1.75; margin: 0; }
+.cv-roi strong { color: var(--v); font-weight: 700; }
+
+/* plano extras */
+.plano-sub { display: block; font-size: 12px; font-weight: 600; color: var(--v); letter-spacing: 0.08em; text-transform: uppercase; margin: -6px 0 12px; }
+.plano-prazo { display: block; font-size: 12px; color: var(--ink-soft); margin: -8px 0 18px; letter-spacing: 0.04em; }
+.plano-diferencial { margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.plano-diferencial .etit { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--v); margin-bottom: 8px; }
+.plano-diferencial p { font-size: 13.5px; color: var(--ink); line-height: 1.6; margin: 0; }
+
+/* canais */
+.canais {
+  background: linear-gradient(135deg, #1a0f2e 0%, #2a1450 100%);
+  padding: 80px 72px; color: #fff;
+}
+.canais-inner { max-width: 1080px; margin: 0 auto; text-align: center; }
+.canais h3 { font-size: clamp(26px, 3vw, 36px); font-weight: 800; letter-spacing: -0.02em; margin: 14px 0 12px; }
+.canais p { font-size: 16px; color: rgba(255,255,255,.7); max-width: 560px; margin: 0 auto 32px; line-height: 1.65; }
+.canais-row { display: inline-flex; gap: 18px; align-items: center; flex-wrap: wrap; justify-content: center; }
+
+@media (max-width: 768px) {
+  .cv-grid { grid-template-columns: 1fr; }
+  .cv-roi { padding: 28px 24px; }
+  .canais { padding: 56px 28px; }
 }
 `;
 
