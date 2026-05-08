@@ -675,6 +675,93 @@ function Investimento() {
   );
 }
 
+function ConexaoValor() {
+  const blocos = [
+    {
+      n: "01",
+      t: "Diagnóstico vira decisão",
+      d: "Pesquisa de Clima + DHO 360 conectam dados de engajamento, processos e cultura — transformando percepção em mapa acionável de prioridades.",
+    },
+    {
+      n: "02",
+      t: "Estrutura sustenta crescimento",
+      d: "Grade Salarial, Job Description Matrix e Survey de Remuneração criam a coluna vertebral de equidade interna e competitividade externa.",
+    },
+    {
+      n: "03",
+      t: "Dimensionamento gera eficiência",
+      d: "Headcount Planning identifica sub e sobrecarga e libera margem operacional — pagando o investimento com a própria reorganização do quadro.",
+    },
+    {
+      n: "04",
+      t: "Ecossistema mantém o ganho",
+      d: "LMS youB e mentoria de board garantem que a transformação não pare no relatório — vira prática contínua dentro da plataforma.",
+    },
+  ];
+  return (
+    <section className="sec">
+      <span className="eyebrow">06 — Lógica do investimento</span>
+      <h2 className="sec-h">
+        Por que esse investimento <span>se paga</span>
+      </h2>
+      <p className="sec-sub">
+        Cada entrega conecta a próxima. Não é uma soma de produtos avulsos —
+        é uma cadeia de valor desenhada para gerar retorno financeiro,
+        cultural e estratégico mensurável.
+      </p>
+
+      <div className="cv-grid">
+        {blocos.map((b) => (
+          <article key={b.n} className="cv-card">
+            <div className="cv-num">{b.n}</div>
+            <h4>{b.t}</h4>
+            <p>{b.d}</p>
+          </article>
+        ))}
+      </div>
+
+      <div className="cv-roi">
+        <div className="cv-roi-tag">Robustez do trabalho</div>
+        <p>
+          Metodologia proprietária aplicada em <strong>+50 empresas</strong>,
+          desenvolvendo <strong>+5 mil líderes</strong> com{" "}
+          <strong>98% de satisfação</strong>. Entregamos consultoria com a
+          profundidade de uma boutique e a escala de uma plataforma — apoiados
+          por dados, IA e um time multidisciplinar de especialistas em DHO.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function Canais() {
+  return (
+    <section className="canais">
+      <div className="canais-inner">
+        <span className="eyebrow eyebrow-light">Continue a conversa</span>
+        <h3>Vamos avançar quando fizer sentido para você.</h3>
+        <p>
+          Conheça mais sobre nosso ecossistema ou fale diretamente com um
+          consultor youB para ajustar o escopo ao seu momento.
+        </p>
+        <div className="canais-row">
+          <a
+            href="https://www.rhyoub.com.br"
+            target="_blank"
+            rel="noreferrer"
+            className="btn-ghost-light"
+          >
+            Visitar rhyoub.com.br →
+          </a>
+          <a href={WHATSAPP} target="_blank" rel="noreferrer" className="btn-violet">
+            Falar no WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Sobre() {
   return (
     <section className="sec">
