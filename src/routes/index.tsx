@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -11,11 +12,183 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
-  component: Proposta,
+  component: Gate,
 });
 
 const WHATSAPP =
   "https://wa.me/5521991417327?text=Ol%C3%A1%2C%20vim%20pela%20proposta%20youB%20e%20gostaria%20de%20falar%20com%20o%20time.";
+
+const ACCESS_PASSWORD = "gruposa123";
+const ACCESS_KEY = "youb_proposta_grupo_sa_access";
+
+function Gate() {
+  const [unlocked, setUnlocked] = useState(false);
+  const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        if (sessionStorage.getItem(ACCESS_KEY) === "1") setUnlocked(true);
+      } catch {}
+    }
+    setChecked(true);
+  }, []);
+
+  if (!checked) return null;
+  if (!unlocked)
+    return (
+      <Login
+        onSuccess={() => {
+          try {
+            sessionStorage.setItem(ACCESS_KEY, "1");
+          } catch {}
+          setUnlocked(true);
+        }}
+      />
+    );
+  return <Proposta />;
+}
+
+function Login({ onSuccess }: { onSuccess: () => void }) {
+  const [pwd, setPwd] = useState("");
+  const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setErr("");
+    setLoading(true);
+    setTimeout(() => {
+      if (pwd.trim().toLowerCase() === ACCESS_PASSWORD) {
+        onSuccess();
+      } else {
+        setErr("Senha incorreta. Verifique e tente novamente.");
+        setLoading(false);
+      }
+    }, 500);
+  };
+
+  const people = [
+    "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1521119989659-a83eee488004?w=400&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80&auto=format&fit=crop",
+  ];
+
+  return (
+    <div className="gate">
+      <div className="gate-bg">
+        <div className="gate-orb gate-orb-1" />
+        <div className="gate-orb gate-orb-2" />
+        <div className="gate-orb gate-orb-3" />
+      </div>
+
+      <div className="gate-shell">
+        <aside className="gate-side">
+          <div className="gate-brand">
+            you<span>B.</span>
+          </div>
+
+          <div className="gate-mosaic" aria-hidden="true">
+            {people.map((src, i) => (
+              <div key={i} className={`gate-face gate-face-${i + 1}`}>
+                <img src={src} alt="" loading="lazy" />
+              </div>
+            ))}
+            <div className="gate-mosaic-glow" />
+          </div>
+
+          <div className="gate-quote">
+            <p>“Pessoas no centro. Estratégia em movimento.”</p>
+            <span>— Time youB</span>
+          </div>
+        </aside>
+
+        <main className="gate-main">
+          <div className="gate-card">
+            <div className="gate-tag">Acesso restrito · Confidencial</div>
+            <h1 className="gate-title">
+              Proposta preparada<br />
+              <em>exclusivamente para o Grupo SA</em>
+            </h1>
+            <p className="gate-sub">
+              Este documento contém estratégia, escopo e investimento desenhados
+              sob medida. Insira a senha enviada pelo seu consultor youB para
+              liberar o acesso.
+            </p>
+
+            <form onSubmit={submit} className="gate-form" noValidate>
+              <label className="gate-label" htmlFor="pwd">
+                Senha de acesso
+              </label>
+              <div className="gate-input-wrap">
+                <input
+                  id="pwd"
+                  type={show ? "text" : "password"}
+                  value={pwd}
+                  onChange={(e) => setPwd(e.target.value)}
+                  placeholder="Digite a senha"
+                  autoComplete="off"
+                  autoFocus
+                  className="gate-input"
+                />
+                <button
+                  type="button"
+                  className="gate-eye"
+                  onClick={() => setShow((v) => !v)}
+                  aria-label={show ? "Ocultar senha" : "Mostrar senha"}
+                >
+                  {show ? "Ocultar" : "Mostrar"}
+                </button>
+              </div>
+
+              {err && <div className="gate-error">{err}</div>}
+
+              <button type="submit" className="gate-btn" disabled={loading}>
+                {loading ? "Validando…" : "Liberar proposta"}
+                <span className="gate-btn-arrow">→</span>
+              </button>
+
+              <div className="gate-help">
+                Não tem a senha?{" "}
+                <a href={WHATSAPP} target="_blank" rel="noreferrer">
+                  Falar com a youB
+                </a>
+              </div>
+            </form>
+
+            <div className="gate-trust">
+              <div className="gate-trust-item">
+                <strong>+50</strong>
+                <span>empresas atendidas</span>
+              </div>
+              <div className="gate-trust-divider" />
+              <div className="gate-trust-item">
+                <strong>+5k</strong>
+                <span>líderes desenvolvidos</span>
+              </div>
+              <div className="gate-trust-divider" />
+              <div className="gate-trust-item">
+                <strong>98%</strong>
+                <span>satisfação</span>
+              </div>
+            </div>
+          </div>
+
+          <footer className="gate-foot">
+            <span>© 2026 youB · Documento confidencial</span>
+            <span>rhyoub.com.br</span>
+          </footer>
+        </main>
+      </div>
+
+      <style>{gateCss}</style>
+    </div>
+  );
+}
 
 function Proposta() {
   return (
