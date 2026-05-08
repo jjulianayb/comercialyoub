@@ -129,13 +129,12 @@ function Login({ onSuccess }: { onSuccess: () => void }) {
           <div className="gate-card">
             <div className="gate-tag">Acesso restrito · Confidencial</div>
             <h1 className="gate-title">
-              Proposta preparada<br />
-              <em>exclusivamente para o Grupo SA</em>
+              Bem-vindo à <em>youB</em>
             </h1>
             <p className="gate-sub">
-              Este documento contém estratégia, escopo e investimento desenhados
-              sob medida. Insira a senha enviada pelo seu consultor youB para
-              liberar o acesso.
+              Acesse sua proposta inserindo a senha fornecida abaixo. Este
+              documento foi preparado sob medida e contém estratégia, escopo e
+              investimento pensados para o seu momento.
             </p>
 
             <form onSubmit={submit} className="gate-form" noValidate>
