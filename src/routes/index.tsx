@@ -251,7 +251,9 @@ function Proposta() {
       <Escopo />
       <Metodologia />
       <Cronograma />
+      <ConexaoValor />
       <Investimento />
+      <Canais />
       <Sobre />
       <ProximosPassos />
       <Rodape />
