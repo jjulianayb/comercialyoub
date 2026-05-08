@@ -1286,6 +1286,49 @@ footer {
   .sobre-grid { gap: 40px; }
   .fase { gap: 20px; }
 }
+
+/* conexão de valor */
+.cv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 32px; }
+.cv-card {
+  background: #fff; border: 1px solid var(--line);
+  border-radius: 18px; padding: 32px 28px;
+  transition: border-color .18s, transform .18s, box-shadow .18s;
+}
+.cv-card:hover { border-color: var(--v); transform: translateY(-3px); box-shadow: var(--youb-shadow); }
+.cv-num { font-size: 13px; font-weight: 800; color: var(--v); letter-spacing: 0.18em; margin-bottom: 14px; }
+.cv-card h4 { font-size: 18px; font-weight: 700; color: var(--ink); margin: 0 0 10px; letter-spacing: -0.01em; }
+.cv-card p { font-size: 14px; color: var(--ink-soft); line-height: 1.65; margin: 0; }
+.cv-roi {
+  background: linear-gradient(135deg, var(--vsoft) 0%, #fff 100%);
+  border: 1px solid var(--line); border-left: 4px solid var(--v);
+  border-radius: 0 18px 18px 0; padding: 36px 40px;
+}
+.cv-roi-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--v); margin-bottom: 12px; }
+.cv-roi p { font-size: 16px; color: var(--ink); line-height: 1.75; margin: 0; }
+.cv-roi strong { color: var(--v); font-weight: 700; }
+
+/* plano extras */
+.plano-sub { display: block; font-size: 12px; font-weight: 600; color: var(--v); letter-spacing: 0.08em; text-transform: uppercase; margin: -6px 0 12px; }
+.plano-prazo { display: block; font-size: 12px; color: var(--ink-soft); margin: -8px 0 18px; letter-spacing: 0.04em; }
+.plano-diferencial { margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.plano-diferencial .etit { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--v); margin-bottom: 8px; }
+.plano-diferencial p { font-size: 13.5px; color: var(--ink); line-height: 1.6; margin: 0; }
+
+/* canais */
+.canais {
+  background: linear-gradient(135deg, #1a0f2e 0%, #2a1450 100%);
+  padding: 80px 72px; color: #fff;
+}
+.canais-inner { max-width: 1080px; margin: 0 auto; text-align: center; }
+.canais h3 { font-size: clamp(26px, 3vw, 36px); font-weight: 800; letter-spacing: -0.02em; margin: 14px 0 12px; }
+.canais p { font-size: 16px; color: rgba(255,255,255,.7); max-width: 560px; margin: 0 auto 32px; line-height: 1.65; }
+.canais-row { display: inline-flex; gap: 18px; align-items: center; flex-wrap: wrap; justify-content: center; }
+
+@media (max-width: 768px) {
+  .cv-grid { grid-template-columns: 1fr; }
+  .cv-roi { padding: 28px 24px; }
+  .canais { padding: 56px 28px; }
+}
 `;
 
 const gateCss = `
