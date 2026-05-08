@@ -62,9 +62,21 @@
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.875rem;
+
+  /* youB brand */
+  --youb-violet: oklch(0.55 0.24 295);          /* #7C3AED-ish */
+  --youb-violet-strong: oklch(0.48 0.26 295);
+  --youb-violet-soft: oklch(0.96 0.025 295);
+  --youb-violet-glow: oklch(0.65 0.22 295);
+  --youb-ink: oklch(0.18 0.02 280);
+  --youb-ink-soft: oklch(0.45 0.02 280);
+  --youb-line: oklch(0.92 0.005 280);
+  --youb-surface: oklch(0.985 0.003 280);
+  --youb-shadow: 0 20px 50px -20px oklch(0.55 0.24 295 / 0.25);
+
   --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.18 0.02 280);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
