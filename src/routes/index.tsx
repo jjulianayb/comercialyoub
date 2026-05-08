@@ -608,7 +608,7 @@ function Investimento() {
   return (
     <section id="investimento" className="sec-soft">
       <div className="sec-inner">
-        <span className="eyebrow">06 — Investimento</span>
+        <span className="eyebrow">07 — Investimento</span>
         <h2 className="sec-h">
           Escolha o <span>plano ideal</span>
         </h2>
