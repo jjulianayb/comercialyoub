@@ -557,7 +557,7 @@ function Cronograma() {
   ];
   return (
     <section className="sec">
-      <span className="eyebrow">05 — Prazos</span>
+      <span className="eyebrow">06 — Prazos</span>
       <h2 className="sec-h">
         Prazos estimados de <span>execução</span>
       </h2>
