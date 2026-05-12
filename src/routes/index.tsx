@@ -419,13 +419,14 @@ function Objetivo() {
         </p>
 
         <div className="obj-card">
-          <span className="obj-tag">Propósito do Projeto</span>
-          <p>
-            Estruturar e fortalecer a área de <strong>Recursos Humanos</strong>{" "}
-            como alavanca estratégica de crescimento, eficiência e
-            sustentabilidade da operação — transformando pessoas, processos e
-            cultura em <strong>vantagem competitiva real e mensurável</strong>.
-          </p>
+          <span className="obj-tag">Objetivos do Projeto</span>
+          <ul className="obj-lista">
+            <li>Mapear de forma estruturada a percepção dos colaboradores sobre clima, liderança e ambiente de trabalho.</li>
+            <li>Avaliar a maturidade e o desenho atual da área de RH, identificando riscos, gargalos e oportunidades de evolução.</li>
+            <li>Comparar práticas internas de salários, benefícios e remuneração com o mercado de referência.</li>
+            <li>Estruturar uma tabela salarial com hierarquização de cargos, garantindo consistência interna e competitividade externa.</li>
+            <li>Apoiar decisões de dimensionamento qualiquantitativo do quadro, por unidade e área, com base em dashboards consolidados.</li>
+          </ul>
         </div>
       </div>
     </section>
