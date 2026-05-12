@@ -1404,6 +1404,15 @@ footer {
 .plano-diferencial { margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--line); }
 .plano-diferencial .etit { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--v); margin-bottom: 8px; }
 .plano-diferencial p { font-size: 13.5px; color: var(--ink); line-height: 1.6; margin: 0; }
+.plano-beneficios { margin-top: 18px; padding: 18px 20px; border-radius: 14px; background: linear-gradient(135deg, color-mix(in oklab, var(--v) 12%, transparent), color-mix(in oklab, var(--v) 4%, transparent)); border: 1px solid color-mix(in oklab, var(--v) 25%, transparent); }
+.plano.is-destaque .plano-beneficios { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.14); }
+.plano-beneficios .etit { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--v); margin-bottom: 10px; }
+.plano.is-destaque .plano-beneficios .etit { color: var(--vglow); }
+.plano-beneficios ul { list-style: none; margin: 0 0 4px; padding: 0; }
+.plano-beneficios ul li { display: flex; gap: 10px; font-size: 13px; color: var(--ink); line-height: 1.55; padding: 6px 0; }
+.plano.is-destaque .plano-beneficios ul li { color: rgba(255,255,255,.85); }
+.plano-beneficios ul li::before { content: '✓'; color: var(--v); font-weight: 800; flex-shrink: 0; }
+.plano.is-destaque .plano-beneficios ul li::before { color: var(--vglow); }
 
 /* canais */
 .canais {
