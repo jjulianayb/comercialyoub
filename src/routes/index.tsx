@@ -359,7 +359,7 @@ function Contexto() {
     <section className="sec">
       <span className="eyebrow">01 — Contexto</span>
       <h2 className="sec-h">
-        Entendemos o seu <span>cenário</span>
+        Mapeamento <span>inicial</span>
       </h2>
       <p className="sec-sub">
         Antes de qualquer proposta, mapeamos o ambiente, os desafios e as
@@ -551,9 +551,9 @@ function SoftwareIA() {
 
 function Cronograma() {
   const fases = [
-    ["1", "Plano Essencial", "até 3 meses", "Pesquisa de clima, diagnóstico da função de RH e pesquisa de salários, benefícios e remuneração."],
-    ["2", "Plano Estrutural", "até 6 meses", "Inclui desenvolvimento da estrutura de cargos, tabela salarial e descrições de cargos."],
-    ["3", "Plano Estratégico", "até 9 meses", "Abrange também o dimensionamento qualiquantitativo do quadro e a consolidação integrada dos resultados."],
+    ["1", "Plano Essencial", "3 meses", "Pesquisa de clima, diagnóstico da função de RH e pesquisa de salários, benefícios e remuneração."],
+    ["2", "Plano Estrutural", "6 meses", "Inclui desenvolvimento da estrutura de cargos, tabela salarial e descrições de cargos."],
+    ["3", "Plano Estratégico", "9 meses", "Abrange também o dimensionamento qualiquantitativo do quadro e a consolidação integrada dos resultados."],
   ];
   return (
     <section className="sec">
@@ -594,7 +594,7 @@ const PLANOS = [
     subtitulo: "Diagnóstico Integrado",
     foco: "Cobre os 4 escopos iniciais do briefing: clima, diagnóstico de RH e pesquisa de remuneração, com tabela salarial estruturada.",
     valor: "55.000",
-    prazo: "até 3 meses",
+    prazo: "3 meses",
     pagamento: "À vista com 5% de desconto, ou em até 3 parcelas mensais (1ª na assinatura).",
     itens: [
       "Pesquisa de clima organizacional para ~500 colaboradores",
@@ -607,6 +607,12 @@ const PLANOS = [
       "Diagnóstico de RH com prioridades de evolução",
       "Comparativo de remuneração com o mercado de referência",
     ],
+    beneficios: [
+      "Decisões de RH baseadas em dados, não em percepção",
+      "Redução de turnover ao agir sobre os reais ofensores de clima",
+      "Política de remuneração competitiva e justa, evitando perda de talentos",
+      "Ganho de tempo da liderança com diagnóstico pronto e priorizado",
+    ],
     diferencial: "Visão clara do clima, da maturidade de RH e do posicionamento de remuneração — base confiável para decisões de curto prazo.",
     cta: "Solicitar proposta",
   },
@@ -615,7 +621,7 @@ const PLANOS = [
     subtitulo: "Cargos, Salários e Descrições",
     foco: "Inclui tudo do Plano Essencial e adiciona estrutura de cargos, tabela salarial hierarquizada e descrições de cargo para os ~150 cargos.",
     valor: "120.000",
-    prazo: "até 6 meses",
+    prazo: "6 meses",
     pagamento: "À vista com 8% de desconto, ou em até 6 parcelas mensais (1ª na assinatura).",
     destaque: true,
     itens: [
@@ -630,6 +636,13 @@ const PLANOS = [
       "Catálogo completo de descrições de cargo",
       "Dashboards de cargos e salários no App youB",
     ],
+    beneficios: [
+      "Equidade interna e fim das decisões salariais casuísticas",
+      "Plano de carreira claro, aumentando engajamento e retenção",
+      "Processos seletivos mais ágeis com descrições de cargo prontas",
+      "Base sólida para promoções, méritos e enquadramentos defensáveis juridicamente",
+      "Redução de passivo trabalhista por desvio de função",
+    ],
     diferencial: "Reduz decisões casuísticas de remuneração e promoções, ampliando a percepção de justiça interna e transparência.",
     cta: "Escolher este plano",
   },
@@ -638,7 +651,7 @@ const PLANOS = [
     subtitulo: "Estrutura e Dimensionamento de Pessoal",
     foco: "Inclui tudo do Plano Estrutural e adiciona o dimensionamento qualiquantitativo do quadro nas unidades MG e Ponta Grossa/PR.",
     valor: "180.000",
-    prazo: "até 9 meses",
+    prazo: "9 meses",
     pagamento: "À vista com 10% de desconto, ou em até 9 parcelas mensais (1ª na assinatura).",
     itens: [
       "Tudo do Plano Estrutural",
@@ -651,6 +664,13 @@ const PLANOS = [
       "Modelo de dimensionamento por unidade com simulações de cenário",
       "Mapa de adequação quadro x estratégia",
       "Visão completa da arquitetura de pessoas pronta para suportar crescimento",
+    ],
+    beneficios: [
+      "Otimização de headcount e redução de custo de folha sem perder produtividade",
+      "Capacidade de escalar unidades novas com previsibilidade de quadro",
+      "Decisões de contratação e remanejamento sustentadas por dados",
+      "Maior produtividade por colaborador com a equipe certa em cada função",
+      "Arquitetura de pessoas preparada para fusões, expansão ou novas operações",
     ],
     diferencial: "Decisões de contratação, remanejamento e ajuste de quadro baseadas em dados — não em percepções isoladas.",
     cta: "Solicitar proposta",
@@ -699,6 +719,14 @@ function Investimento() {
               <div className="plano-diferencial">
                 <span className="etit">Diferencial</span>
                 <p>{p.diferencial}</p>
+              </div>
+              <div className="plano-beneficios">
+                <span className="etit">Como esse investimento se transforma em benefícios</span>
+                <ul>
+                  {p.beneficios.map((b) => (
+                    <li key={b}>{b}</li>
+                  ))}
+                </ul>
               </div>
               <a
                 href={WHATSAPP}
@@ -1376,6 +1404,15 @@ footer {
 .plano-diferencial { margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--line); }
 .plano-diferencial .etit { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--v); margin-bottom: 8px; }
 .plano-diferencial p { font-size: 13.5px; color: var(--ink); line-height: 1.6; margin: 0; }
+.plano-beneficios { margin-top: 18px; padding: 18px 20px; border-radius: 14px; background: linear-gradient(135deg, color-mix(in oklab, var(--v) 12%, transparent), color-mix(in oklab, var(--v) 4%, transparent)); border: 1px solid color-mix(in oklab, var(--v) 25%, transparent); }
+.plano.is-destaque .plano-beneficios { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.14); }
+.plano-beneficios .etit { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--v); margin-bottom: 10px; }
+.plano.is-destaque .plano-beneficios .etit { color: var(--vglow); }
+.plano-beneficios ul { list-style: none; margin: 0 0 4px; padding: 0; }
+.plano-beneficios ul li { display: flex; gap: 10px; font-size: 13px; color: var(--ink); line-height: 1.55; padding: 6px 0; }
+.plano.is-destaque .plano-beneficios ul li { color: rgba(255,255,255,.85); }
+.plano-beneficios ul li::before { content: '✓'; color: var(--v); font-weight: 800; flex-shrink: 0; }
+.plano.is-destaque .plano-beneficios ul li::before { color: var(--vglow); }
 
 /* canais */
 .canais {
