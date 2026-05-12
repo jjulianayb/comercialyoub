@@ -1097,7 +1097,8 @@ const css = `
   background: radial-gradient(circle, oklch(0.65 0.22 295 / 0.25) 0%, transparent 70%);
   pointer-events: none;
 }
-.capa-nav { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 3; }
+.capa-nav { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 3; gap: 12px; }
+.capa-nav-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
 .capa-body { display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 3; max-width: 1080px; margin: 0 auto; width: 100%; padding: 60px 0; }
 .capa-titulo {
   font-size: clamp(40px, 6vw, 76px);
