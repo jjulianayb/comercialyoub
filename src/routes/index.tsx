@@ -285,12 +285,37 @@ const lockCss = `
 }
 .proposta-locked a img { pointer-events: auto; }
 @media print {
-  .proposta-locked { display: none !important; }
-  body::before {
+  body:not(.printing) .proposta-locked { display: none !important; }
+  body:not(.printing)::before {
     content: "Documento confidencial — impressão desabilitada.";
     display: block; padding: 40px; font-family: sans-serif;
     font-size: 18px; color: #333;
   }
+  body.printing { background: #fff !important; }
+  body.printing .no-print { display: none !important; }
+  body.printing .proposta-locked,
+  body.printing .proposta-locked * {
+    -webkit-user-select: auto !important;
+    user-select: auto !important;
+  }
+  body.printing .proposta-locked img { pointer-events: auto !important; }
+  body.printing .sec,
+  body.printing .sec-soft,
+  body.printing .capa,
+  body.printing .plano,
+  body.printing section,
+  body.printing article {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  body.printing h1, body.printing h2, body.printing h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  body.printing .capa { min-height: auto !important; page-break-after: always; }
+  body.printing .planos { display: block !important; }
+  body.printing .plano { margin-bottom: 16px !important; }
+  @page { margin: 14mm; size: A4; }
 }
 `;
 
