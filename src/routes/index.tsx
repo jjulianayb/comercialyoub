@@ -317,14 +317,14 @@ function Capa() {
       <div className="capa-body">
         <span className="eyebrow eyebrow-light">Ecossistema em DHO e Inteligência de pessoas</span>
         <h1 className="capa-titulo">
-          Transformação <em>estratégica</em>
+          Consultoria em RH com <em>software próprio</em>
           <br />
-          em gestão de pessoas.
+          e IA para clima, cargos & salários.
         </h1>
         <p className="capa-desc">
-          Conectamos desenvolvimento humano, cultura e liderança em experiências
-          contínuas, profundas e práticas — estruturadas para gerar resultado real
-          na sua operação.
+          Projeto integrado para uma operação de ~500 colaboradores, com unidades
+          em Minas Gerais e Ponta Grossa/PR — unindo diagnóstico profundo,
+          estruturação técnica e dashboards executivos com inteligência artificial.
         </p>
 
         <div className="capa-cta-row">
