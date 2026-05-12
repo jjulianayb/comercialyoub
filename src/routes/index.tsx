@@ -1392,6 +1392,31 @@ footer {
   .cv-roi { padding: 28px 24px; }
   .canais { padding: 56px 28px; }
 }
+
+.obj-lista { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+.obj-lista li { position: relative; padding-left: 26px; font-size: 15px; color: var(--ink-soft); line-height: 1.65; }
+.obj-lista li::before { content: "→"; position: absolute; left: 0; top: 0; color: var(--v); font-weight: 700; }
+
+.plano-pgto { font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; margin: 0 0 18px; padding: 10px 12px; background: rgba(124,58,237,.06); border-radius: 10px; border-left: 2px solid var(--v); }
+.plano.is-destaque .plano-pgto { background: rgba(255,255,255,.08); color: rgba(255,255,255,.85); border-left-color: rgba(255,255,255,.5); }
+
+.logistica { margin-top: 32px; padding: 28px; background: #fff; border: 1px solid var(--line); border-radius: 18px; }
+.logistica .etit { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--v); margin-bottom: 14px; }
+.logistica ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.logistica li { position: relative; padding-left: 22px; font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
+.logistica li::before { content: "•"; position: absolute; left: 6px; top: 0; color: var(--v); font-weight: 700; }
+
+.sw-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 32px; }
+.sw-card { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 24px; transition: all .25s ease; }
+.sw-card:hover { border-color: var(--v); transform: translateY(-3px); box-shadow: var(--youb-shadow); }
+.sw-ico { font-size: 28px; margin-bottom: 12px; }
+.sw-card h4 { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.sw-card p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.65; }
+.sw-nota { margin-top: 28px; padding: 20px 24px; background: rgba(124,58,237,.06); border-left: 3px solid var(--v); border-radius: 12px; }
+.sw-nota p { font-size: 14px; color: var(--ink); line-height: 1.65; margin: 0; }
+@media (max-width: 768px) { .sw-grid { grid-template-columns: 1fr; } }
+
+.crono-nota { margin-top: 24px; font-size: 13.5px; color: var(--ink-soft); line-height: 1.65; font-style: italic; }
 `;
 
 const gateCss = `
