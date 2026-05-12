@@ -44,8 +44,8 @@ function Gate() {
     };
   }, [check]);
 
-  if (!checked) return <GateSkeleton />;
-  if (!unlocked) return <Login onSuccess={() => setUnlocked(true)} />;
+  // Acesso temporariamente liberado para compartilhamento externo
+  void checked; void unlocked; void setUnlocked;
   return <Proposta />;
 }
 
