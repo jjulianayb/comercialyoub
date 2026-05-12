@@ -509,6 +509,45 @@ function Metodologia() {
   );
 }
 
+function SoftwareIA() {
+  const feats = [
+    ["🗂️", "Base única de dados", "Visão consolidada de ~500 colaboradores e ~150 cargos por unidade (MG e PR), área e nível hierárquico."],
+    ["⚙️", "Consolidação automática", "Pesquisas de clima, salários e dimensionamento integradas, reduzindo retrabalho e risco de erro manual."],
+    ["📑", "Relatórios executivos", "HTML único com linguagem objetiva, riscos, tendências e recomendações priorizadas."],
+    ["🤖", "Dashboards com IA", "Filtros por unidade e área, insights automáticos e respostas a perguntas como “onde estão os maiores riscos de rotatividade?”."],
+  ];
+  return (
+    <section className="sec-soft">
+      <div className="sec-inner">
+        <span className="eyebrow">05 — Software & IA</span>
+        <h2 className="sec-h">
+          Software próprio e <span>dashboards com IA</span>
+        </h2>
+        <p className="sec-sub">
+          Todo o projeto será operacionalizado em nosso software proprietário,
+          desenvolvido para suportar diagnósticos de RH, gestão de liderança e
+          projetos de cargos e salários.
+        </p>
+        <div className="sw-grid">
+          {feats.map(([i, t, d]) => (
+            <article key={t} className="sw-card">
+              <div className="sw-ico">{i}</div>
+              <h4>{t}</h4>
+              <p>{d}</p>
+            </article>
+          ))}
+        </div>
+        <div className="sw-nota">
+          <p>
+            Mais velocidade de análise, transparência nas decisões e facilidade
+            de apresentação para diretoria e conselho.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Cronograma() {
   const fases = [
     ["1", "Plano Essencial", "até 3 meses", "Pesquisa de clima, diagnóstico da função de RH e pesquisa de salários, benefícios e remuneração."],
