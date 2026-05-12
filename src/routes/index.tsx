@@ -250,6 +250,7 @@ function Proposta() {
       <Objetivo />
       <Escopo />
       <Metodologia />
+      <SoftwareIA />
       <Cronograma />
       <ConexaoValor />
       <Investimento />
