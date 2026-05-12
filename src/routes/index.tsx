@@ -642,6 +642,7 @@ function Investimento() {
                 <span className="valor">{p.valor}</span>
               </div>
               <span className="plano-prazo">Prazo estimado: {p.prazo}</span>
+              <div className="plano-pgto">{p.pagamento}</div>
               <ul className="plano-lista">
                 {p.itens.map((i) => (
                   <li key={i}>{i}</li>
