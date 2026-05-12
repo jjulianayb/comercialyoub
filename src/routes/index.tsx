@@ -468,20 +468,23 @@ function Escopo() {
 
 function Metodologia() {
   const items = [
-    ["01", "Diagnóstico Organizacional", "Escuta ativa, análise de dados e mapeamento preciso do estado atual."],
-    ["02", "Benchmarking de Mercado", "Comparativos com empresas de referência no setor e porte equivalente."],
-    ["03", "Construção Acionável", "Recomendações práticas, priorizadas e adaptadas à realidade do cliente."],
-    ["04", "Resultado Mensurável", "Indicadores definidos desde o início para acompanhar impacto real."],
+    ["01", "Análise de dados e documentos", "Leitura de relatórios, indicadores de pessoas e materiais de RH disponíveis."],
+    ["02", "Escuta qualificada", "Entrevistas estruturadas com RH, liderança e áreas-chave quando necessário."],
+    ["03", "Instrumentos de pesquisa", "Pesquisas quantitativas e qualitativas adaptadas à operação de ~500 colaboradores."],
+    ["04", "Modelagem técnica", "Modelos próprios para cargos, faixas salariais, dimensionamento e priorização de ações."],
+    ["05", "Integração no software youB", "Consolidação dos resultados em sistema próprio, com relatórios executivos e dashboards com IA."],
+    ["06", "Validação conjunta", "Alinhamento das recomendações com RH e diretoria, garantindo aderência e viabilidade."],
   ];
   return (
     <section className="sec-dark">
       <div className="sec-inner">
         <span className="eyebrow eyebrow-light">04 — Metodologia</span>
         <h2 className="sec-h is-light">
-          Nossa abordagem <span>proprietária</span>
+          Metodologia de <span>trabalho</span>
         </h2>
         <p className="sec-sub is-light">
-          O que diferencia a youB não é o que entregamos — é como chegamos lá.
+          Conduzimos o projeto com metodologia própria da youB para diagnóstico
+          e estruturação de Recursos Humanos.
         </p>
 
         <div className="met-grid">
@@ -496,11 +499,9 @@ function Metodologia() {
 
         <div className="met-desc">
           <p>
-            Utilizamos uma abordagem proprietária que integra{" "}
-            <strong>diagnóstico organizacional</strong>, análise de dados,{" "}
-            <strong>benchmarking de mercado</strong> e construção de planos
-            acionáveis — com foco em resultado mensurável e implementação real,
-            não apenas entrega de relatórios.
+            Os instrumentos, modelos e algoritmos utilizados são de{" "}
+            <strong>uso exclusivo da consultoria</strong> e serão personalizados
+            conforme o contexto da empresa.
           </p>
         </div>
       </div>
