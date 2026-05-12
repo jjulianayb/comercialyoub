@@ -720,6 +720,14 @@ function Investimento() {
                 <span className="etit">Diferencial</span>
                 <p>{p.diferencial}</p>
               </div>
+              <div className="plano-beneficios">
+                <span className="etit">Como esse investimento se transforma em benefícios</span>
+                <ul>
+                  {p.beneficios.map((b) => (
+                    <li key={b}>{b}</li>
+                  ))}
+                </ul>
+              </div>
               <a
                 href={WHATSAPP}
                 target="_blank"
