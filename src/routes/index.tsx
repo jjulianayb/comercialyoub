@@ -250,6 +250,7 @@ function Proposta() {
       <Objetivo />
       <Escopo />
       <Metodologia />
+      <SoftwareIA />
       <Cronograma />
       <ConexaoValor />
       <Investimento />
@@ -317,14 +318,14 @@ function Capa() {
       <div className="capa-body">
         <span className="eyebrow eyebrow-light">Ecossistema em DHO e Inteligência de pessoas</span>
         <h1 className="capa-titulo">
-          Transformação <em>estratégica</em>
+          Consultoria em RH com <em>software próprio</em>
           <br />
-          em gestão de pessoas.
+          e IA para clima, cargos & salários.
         </h1>
         <p className="capa-desc">
-          Conectamos desenvolvimento humano, cultura e liderança em experiências
-          contínuas, profundas e práticas — estruturadas para gerar resultado real
-          na sua operação.
+          Projeto integrado para uma operação de ~500 colaboradores, com unidades
+          em Minas Gerais e Ponta Grossa/PR — unindo diagnóstico profundo,
+          estruturação técnica e dashboards executivos com inteligência artificial.
         </p>
 
         <div className="capa-cta-row">
@@ -367,20 +368,20 @@ function Contexto() {
 
       <div className="ctx-box">
         <p>
-          Considerando uma operação com aproximadamente{" "}
-          <strong>500 colaboradores</strong>, distribuídos em múltiplas unidades
-          e com alta diversidade de cargos e funções, identificamos
-          oportunidades relevantes na estruturação de processos de RH,
-          eficiência organizacional e gestão estratégica de pessoas. A empresa
-          enfrenta um momento de crescimento que exige bases sólidas para
-          sustentar a escala com consistência e competitividade.
+          O Grupo SA opera com aproximadamente{" "}
+          <strong>500 colaboradores</strong>, distribuídos entre as unidades de{" "}
+          <strong>Minas Gerais</strong> e <strong>Ponta Grossa/PR</strong>, com
+          alta diversidade de cargos e funções. Esse contexto exige uma base
+          sólida de RH — clima, estrutura de cargos, remuneração e
+          dimensionamento — para sustentar o crescimento com consistência,
+          equidade interna e competitividade externa.
         </p>
         <div className="ctx-pills">
           {[
-            ["👥", "500+ colaboradores mapeados"],
-            ["🏢", "Múltiplas unidades"],
-            ["📊", "Alta diversidade de cargos"],
-            ["🚀", "Fase de crescimento acelerado"],
+            ["👥", "~500 colaboradores"],
+            ["🏢", "Unidades MG e Ponta Grossa/PR"],
+            ["📊", "~150 cargos mapeados"],
+            ["🚀", "Decisão prevista em 30 dias"],
           ].map(([i, t]) => (
             <span key={t} className="pill">
               <span>{i}</span>
@@ -392,9 +393,9 @@ function Contexto() {
 
       <div className="nums-grid">
         {[
-          ["6", "Frentes estratégicas identificadas"],
-          ["3", "Fases de transformação estruturadas"],
-          ["12–13", "Semanas de execução estimadas"],
+          ["3", "Planos comerciais estruturados"],
+          ["9", "Meses no escopo mais completo"],
+          ["1", "Software próprio com IA integrada"],
         ].map(([n, l]) => (
           <div key={l} className="num-card">
             <div className="n">{n}</div>
@@ -419,13 +420,14 @@ function Objetivo() {
         </p>
 
         <div className="obj-card">
-          <span className="obj-tag">Propósito do Projeto</span>
-          <p>
-            Estruturar e fortalecer a área de <strong>Recursos Humanos</strong>{" "}
-            como alavanca estratégica de crescimento, eficiência e
-            sustentabilidade da operação — transformando pessoas, processos e
-            cultura em <strong>vantagem competitiva real e mensurável</strong>.
-          </p>
+          <span className="obj-tag">Objetivos do Projeto</span>
+          <ul className="obj-lista">
+            <li>Mapear de forma estruturada a percepção dos colaboradores sobre clima, liderança e ambiente de trabalho.</li>
+            <li>Avaliar a maturidade e o desenho atual da área de RH, identificando riscos, gargalos e oportunidades de evolução.</li>
+            <li>Comparar práticas internas de salários, benefícios e remuneração com o mercado de referência.</li>
+            <li>Estruturar uma tabela salarial com hierarquização de cargos, garantindo consistência interna e competitividade externa.</li>
+            <li>Apoiar decisões de dimensionamento qualiquantitativo do quadro, por unidade e área, com base em dashboards consolidados.</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -467,20 +469,23 @@ function Escopo() {
 
 function Metodologia() {
   const items = [
-    ["01", "Diagnóstico Organizacional", "Escuta ativa, análise de dados e mapeamento preciso do estado atual."],
-    ["02", "Benchmarking de Mercado", "Comparativos com empresas de referência no setor e porte equivalente."],
-    ["03", "Construção Acionável", "Recomendações práticas, priorizadas e adaptadas à realidade do cliente."],
-    ["04", "Resultado Mensurável", "Indicadores definidos desde o início para acompanhar impacto real."],
+    ["01", "Análise de dados e documentos", "Leitura de relatórios, indicadores de pessoas e materiais de RH disponíveis."],
+    ["02", "Escuta qualificada", "Entrevistas estruturadas com RH, liderança e áreas-chave quando necessário."],
+    ["03", "Instrumentos de pesquisa", "Pesquisas quantitativas e qualitativas adaptadas à operação de ~500 colaboradores."],
+    ["04", "Modelagem técnica", "Modelos próprios para cargos, faixas salariais, dimensionamento e priorização de ações."],
+    ["05", "Integração no software youB", "Consolidação dos resultados em sistema próprio, com relatórios executivos e dashboards com IA."],
+    ["06", "Validação conjunta", "Alinhamento das recomendações com RH e diretoria, garantindo aderência e viabilidade."],
   ];
   return (
     <section className="sec-dark">
       <div className="sec-inner">
         <span className="eyebrow eyebrow-light">04 — Metodologia</span>
         <h2 className="sec-h is-light">
-          Nossa abordagem <span>proprietária</span>
+          Metodologia de <span>trabalho</span>
         </h2>
         <p className="sec-sub is-light">
-          O que diferencia a youB não é o que entregamos — é como chegamos lá.
+          Conduzimos o projeto com metodologia própria da youB para diagnóstico
+          e estruturação de Recursos Humanos.
         </p>
 
         <div className="met-grid">
@@ -495,11 +500,48 @@ function Metodologia() {
 
         <div className="met-desc">
           <p>
-            Utilizamos uma abordagem proprietária que integra{" "}
-            <strong>diagnóstico organizacional</strong>, análise de dados,{" "}
-            <strong>benchmarking de mercado</strong> e construção de planos
-            acionáveis — com foco em resultado mensurável e implementação real,
-            não apenas entrega de relatórios.
+            Os instrumentos, modelos e algoritmos utilizados são de{" "}
+            <strong>uso exclusivo da consultoria</strong> e serão personalizados
+            conforme o contexto da empresa.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SoftwareIA() {
+  const feats = [
+    ["🗂️", "Base única de dados", "Visão consolidada de ~500 colaboradores e ~150 cargos por unidade (MG e PR), área e nível hierárquico."],
+    ["⚙️", "Consolidação automática", "Pesquisas de clima, salários e dimensionamento integradas, reduzindo retrabalho e risco de erro manual."],
+    ["📑", "Relatórios executivos", "HTML único com linguagem objetiva, riscos, tendências e recomendações priorizadas."],
+    ["🤖", "Dashboards com IA", "Filtros por unidade e área, insights automáticos e respostas a perguntas como “onde estão os maiores riscos de rotatividade?”."],
+  ];
+  return (
+    <section className="sec-soft">
+      <div className="sec-inner">
+        <span className="eyebrow">05 — Software & IA</span>
+        <h2 className="sec-h">
+          Software próprio e <span>dashboards com IA</span>
+        </h2>
+        <p className="sec-sub">
+          Todo o projeto será operacionalizado em nosso software proprietário,
+          desenvolvido para suportar diagnósticos de RH, gestão de liderança e
+          projetos de cargos e salários.
+        </p>
+        <div className="sw-grid">
+          {feats.map(([i, t, d]) => (
+            <article key={t} className="sw-card">
+              <div className="sw-ico">{i}</div>
+              <h4>{t}</h4>
+              <p>{d}</p>
+            </article>
+          ))}
+        </div>
+        <div className="sw-nota">
+          <p>
+            Mais velocidade de análise, transparência nas decisões e facilidade
+            de apresentação para diretoria e conselho.
           </p>
         </div>
       </div>
@@ -509,19 +551,19 @@ function Metodologia() {
 
 function Cronograma() {
   const fases = [
-    ["1", "Fase 1 — Diagnóstico", "3 a 4 semanas", "Imersão no ambiente da empresa: coleta de dados, entrevistas com lideranças, aplicação das pesquisas e mapeamento do estado atual dos processos de RH."],
-    ["2", "Fase 2 — Estruturação", "4 a 6 semanas", "Desenvolvimento das entregas contratadas: estrutura de cargos, tabelas salariais, benchmarking, descrições e dimensionamento — com validações intermediárias junto ao cliente."],
-    ["3", "Fase 3 — Implementação e Recomendações", "2 a 3 semanas", "Apresentação dos resultados finais, relatório executivo consolidado, plano de ação com prioridades e suporte para a área de RH iniciar a implantação com segurança."],
+    ["1", "Plano Essencial", "até 3 meses", "Pesquisa de clima, diagnóstico da função de RH e pesquisa de salários, benefícios e remuneração."],
+    ["2", "Plano Estrutural", "até 6 meses", "Inclui desenvolvimento da estrutura de cargos, tabela salarial e descrições de cargos."],
+    ["3", "Plano Estratégico", "até 9 meses", "Abrange também o dimensionamento qualiquantitativo do quadro e a consolidação integrada dos resultados."],
   ];
   return (
     <section className="sec">
-      <span className="eyebrow">05 — Cronograma</span>
+      <span className="eyebrow">06 — Prazos</span>
       <h2 className="sec-h">
-        Execução em <span>3 fases</span>
+        Prazos estimados de <span>execução</span>
       </h2>
       <p className="sec-sub">
-        Ritmo estruturado para garantir qualidade, alinhamento e entrega sem
-        surpresas.
+        Considerando disponibilidade de informações internas, agenda das
+        lideranças e aprovação das etapas intermediárias.
       </p>
       <div className="crono">
         {fases.map(([n, t, d, p], idx) => (
@@ -538,6 +580,10 @@ function Cronograma() {
           </div>
         ))}
       </div>
+      <p className="crono-nota">
+        O cronograma detalhado será alinhado na reunião de kick-off,
+        considerando o calendário interno e marcos relevantes do negócio.
+      </p>
     </section>
   );
 }
@@ -545,64 +591,68 @@ function Cronograma() {
 const PLANOS = [
   {
     nome: "Plano Essencial",
-    subtitulo: "Escopo inicial do briefing",
-    foco: "Entrega exatamente os 4 escopos solicitados pelo Grupo SA, com metodologia youB e benchmarking para MG e PR.",
-    valor: "45.000",
-    prazo: "60 dias",
+    subtitulo: "Diagnóstico Integrado",
+    foco: "Cobre os 4 escopos iniciais do briefing: clima, diagnóstico de RH e pesquisa de remuneração, com tabela salarial estruturada.",
+    valor: "55.000",
+    prazo: "até 3 meses",
+    pagamento: "À vista com 5% de desconto, ou em até 3 parcelas mensais (1ª na assinatura).",
     itens: [
-      "Pesquisa de Clima Organizacional — coleta digital, análise quantitativa e qualitativa",
-      "Diagnóstico da função de RH — auditoria de processos, recomendações e plano de ação para a área",
-      "Pesquisa de salários, benefícios e práticas de remuneração — comparativo de mercado MG e PR",
-      "Tabela salarial com hierarquização de cargos — estrutura para os ~150 cargos da operação",
+      "Pesquisa de clima organizacional para ~500 colaboradores",
+      "Diagnóstico da função de RH com plano de ação macro",
+      "Pesquisa de salários, benefícios e práticas de remuneração",
+      "Consolidação dos resultados no software youB com dashboards de IA",
     ],
     entregaveis: [
-      "Relatório executivo de clima com Top 5 gaps de engajamento e retenção",
-      "Diagnóstico de RH com plano de ação priorizado por impacto",
-      "Tabela salarial hierarquizada pronta para aplicação",
+      "Relatório executivo de clima por unidade, área e nível hierárquico",
+      "Diagnóstico de RH com prioridades de evolução",
+      "Comparativo de remuneração com o mercado de referência",
     ],
-    diferencial: "Cumpre 100% do escopo inicial solicitado, com entrega em até 60 dias para viabilizar a aprovação no prazo previsto.",
+    diferencial: "Visão clara do clima, da maturidade de RH e do posicionamento de remuneração — base confiável para decisões de curto prazo.",
     cta: "Solicitar proposta",
   },
   {
-    nome: "Plano Estratégico",
-    subtitulo: "Briefing completo (recomendado)",
-    foco: "Inclui os escopos iniciais e os itens adicionais avaliados no briefing — descrição de cargos e dimensionamento qualiquantitativo do quadro.",
-    valor: "85.000",
-    prazo: "90 dias",
+    nome: "Plano Estrutural",
+    subtitulo: "Cargos, Salários e Descrições",
+    foco: "Inclui tudo do Plano Essencial e adiciona estrutura de cargos, tabela salarial hierarquizada e descrições de cargo para os ~150 cargos.",
+    valor: "120.000",
+    prazo: "até 6 meses",
+    pagamento: "À vista com 8% de desconto, ou em até 6 parcelas mensais (1ª na assinatura).",
     destaque: true,
     itens: [
       "Tudo do Plano Essencial",
-      "Descrição de cargos — perfis modernos por competências para os ~150 cargos",
-      "Dimensionamento qualiquantitativo do quadro — análise das ~500 posições nas unidades MG e PR",
+      "Tabela salarial com hierarquização de cargos (~150 cargos)",
+      "Organização em famílias e níveis (operacional, administrativo, liderança)",
+      "Descrição de cargos: missão, responsabilidades, requisitos e relacionamentos",
+      "Parametrização da estrutura no software youB com dashboards consolidados",
     ],
     entregaveis: [
-      "Catálogo completo de descrições de cargo por competência",
-      "Modelo de dimensionamento com recomendações de headcount por unidade",
-      "Mapa de adequação quadro x estratégia para os próximos 12 meses",
+      "Estrutura de cargos e salários consistente e tecnicamente fundamentada",
+      "Catálogo completo de descrições de cargo",
+      "Dashboards de cargos e salários no App youB",
     ],
-    diferencial: "Atende integralmente o escopo solicitado e o avaliado, conectando estrutura, remuneração e quadro em uma só leitura estratégica.",
+    diferencial: "Reduz decisões casuísticas de remuneração e promoções, ampliando a percepção de justiça interna e transparência.",
     cta: "Escolher este plano",
   },
   {
-    nome: "Plano Executivo",
-    subtitulo: "Briefing completo + ecossistema youB",
-    foco: "Adiciona os serviços complementares recomendados pela youB para sustentar os ganhos do projeto e acelerar a maturidade de RH.",
-    valor: "150.000+",
-    prazo: "120 dias",
+    nome: "Plano Estratégico",
+    subtitulo: "Estrutura e Dimensionamento de Pessoal",
+    foco: "Inclui tudo do Plano Estrutural e adiciona o dimensionamento qualiquantitativo do quadro nas unidades MG e Ponta Grossa/PR.",
+    valor: "180.000",
+    prazo: "até 9 meses",
+    pagamento: "À vista com 10% de desconto, ou em até 9 parcelas mensais (1ª na assinatura).",
     itens: [
-      "Tudo do Plano Estratégico",
-      "Construção de organograma estruturado das unidades MG e PR",
-      "Workshop de Liderança Regenerativa para gestores e diretoria",
-      "Implementação do LMS youB (Trial/Setup) — digitalização das descrições de cargo e trilhas de integração",
-      "Mentoria executiva — 4 sessões com RH e Board para sustentação das mudanças",
+      "Tudo do Plano Estrutural",
+      "Dimensionamento qualiquantitativo por unidade, área e tipo de função",
+      "Identificação de gaps de equipe e propostas de ajuste",
+      "Mapa de prioridades para otimização de headcount",
+      "Cenários de dimensionamento integrados aos dashboards com IA",
     ],
     entregaveis: [
-      "Organograma oficial validado com a diretoria",
-      "LMS youB ativo com conteúdos de integração e cargos digitalizados",
-      "Dashboard dinâmico de Dimensionamento dentro do App youB",
-      "Programa de mentoria executiva recorrente com o Board",
+      "Modelo de dimensionamento por unidade com simulações de cenário",
+      "Mapa de adequação quadro x estratégia",
+      "Visão completa da arquitetura de pessoas pronta para suportar crescimento",
     ],
-    diferencial: "Transforma o projeto em ecossistema vivo: dimensionamento e cargos viram dashboard dinâmico no App youB, com licenciamento SaaS incluso no pós-projeto.",
+    diferencial: "Decisões de contratação, remanejamento e ajuste de quadro baseadas em dados — não em percepções isoladas.",
     cta: "Solicitar proposta",
   },
 ];
@@ -611,7 +661,7 @@ function Investimento() {
   return (
     <section id="investimento" className="sec-soft">
       <div className="sec-inner">
-        <span className="eyebrow">07 — Investimento</span>
+        <span className="eyebrow">08 — Investimento</span>
         <h2 className="sec-h">
           Escolha o <span>plano ideal</span>
         </h2>
@@ -632,6 +682,7 @@ function Investimento() {
                 <span className="valor">{p.valor}</span>
               </div>
               <span className="plano-prazo">Prazo estimado: {p.prazo}</span>
+              <div className="plano-pgto">{p.pagamento}</div>
               <ul className="plano-lista">
                 {p.itens.map((i) => (
                   <li key={i}>{i}</li>
@@ -663,15 +714,24 @@ function Investimento() {
 
         <div className="conds">
           {[
-            ["Condições de Pagamento", "50% na assinatura do contrato e 50% na entrega dos relatórios finais. Parcelamento disponível para projetos acima de R$ 85.000."],
-            ["Validade da Proposta", "Esta proposta tem validade de 30 dias a partir da data de emissão, sujeita à disponibilidade de agenda."],
-            ["Início do Projeto", "Em até 5 dias úteis após assinatura do contrato e confirmação do pagamento inicial."],
+            ["Investimento incluso", "Os valores contemplam todas as atividades de consultoria, uso do software youB e acesso aos dashboards com IA durante o período do projeto."],
+            ["Validade da proposta", "30 dias a partir da data de emissão, sujeita à disponibilidade de agenda."],
+            ["Início do projeto", "Em até 5 dias úteis após assinatura do contrato e confirmação do pagamento inicial."],
           ].map(([t, d]) => (
             <div key={t} className="cond-item">
               <div className="ct">{t}</div>
               <p>{d}</p>
             </div>
           ))}
+        </div>
+
+        <div className="logistica">
+          <span className="etit">Condições logísticas e premissas gerais</span>
+          <ul>
+            <li>Atividades presenciais nas unidades de MG e Ponta Grossa/PR serão planejadas previamente, otimizando agendas para reduzir custos logísticos.</li>
+            <li>Custos de deslocamento, hospedagem, alimentação e traslados locais da equipe de consultoria não estão inclusos nos honorários e serão de responsabilidade da contratante, conforme política interna da empresa.</li>
+            <li>Sempre que aplicável, as atividades poderão ser conduzidas em formato remoto, mantendo a qualidade técnica das entregas.</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -703,7 +763,7 @@ function ConexaoValor() {
   ];
   return (
     <section className="sec">
-      <span className="eyebrow">06 — Lógica do investimento</span>
+      <span className="eyebrow">07 — Lógica do investimento</span>
       <h2 className="sec-h">
         Por que esse investimento <span>se paga</span>
       </h2>
@@ -768,7 +828,7 @@ function Canais() {
 function Sobre() {
   return (
     <section className="sec">
-      <span className="eyebrow">08 — Quem somos</span>
+      <span className="eyebrow">09 — Quem somos</span>
       <h2 className="sec-h">
         A empresa por trás do <span>projeto</span>
       </h2>
@@ -1332,6 +1392,31 @@ footer {
   .cv-roi { padding: 28px 24px; }
   .canais { padding: 56px 28px; }
 }
+
+.obj-lista { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+.obj-lista li { position: relative; padding-left: 26px; font-size: 15px; color: var(--ink-soft); line-height: 1.65; }
+.obj-lista li::before { content: "→"; position: absolute; left: 0; top: 0; color: var(--v); font-weight: 700; }
+
+.plano-pgto { font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; margin: 0 0 18px; padding: 10px 12px; background: rgba(124,58,237,.06); border-radius: 10px; border-left: 2px solid var(--v); }
+.plano.is-destaque .plano-pgto { background: rgba(255,255,255,.08); color: rgba(255,255,255,.85); border-left-color: rgba(255,255,255,.5); }
+
+.logistica { margin-top: 32px; padding: 28px; background: #fff; border: 1px solid var(--line); border-radius: 18px; }
+.logistica .etit { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--v); margin-bottom: 14px; }
+.logistica ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.logistica li { position: relative; padding-left: 22px; font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
+.logistica li::before { content: "•"; position: absolute; left: 6px; top: 0; color: var(--v); font-weight: 700; }
+
+.sw-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 32px; }
+.sw-card { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 24px; transition: all .25s ease; }
+.sw-card:hover { border-color: var(--v); transform: translateY(-3px); box-shadow: var(--youb-shadow); }
+.sw-ico { font-size: 28px; margin-bottom: 12px; }
+.sw-card h4 { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.sw-card p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.65; }
+.sw-nota { margin-top: 28px; padding: 20px 24px; background: rgba(124,58,237,.06); border-left: 3px solid var(--v); border-radius: 12px; }
+.sw-nota p { font-size: 14px; color: var(--ink); line-height: 1.65; margin: 0; }
+@media (max-width: 768px) { .sw-grid { grid-template-columns: 1fr; } }
+
+.crono-nota { margin-top: 24px; font-size: 13.5px; color: var(--ink-soft); line-height: 1.65; font-style: italic; }
 `;
 
 const gateCss = `
