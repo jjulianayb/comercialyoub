@@ -315,7 +315,7 @@ function Capa() {
       </nav>
 
       <div className="capa-body">
-        <span className="eyebrow eyebrow-light">Ecossistema completo de DHO</span>
+        <span className="eyebrow eyebrow-light">Ecossistema em DHO e Inteligência de pessoas</span>
         <h1 className="capa-titulo">
           Transformação <em>estratégica</em>
           <br />
