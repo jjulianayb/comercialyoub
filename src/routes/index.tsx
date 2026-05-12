@@ -359,7 +359,7 @@ function Contexto() {
     <section className="sec">
       <span className="eyebrow">01 — Contexto</span>
       <h2 className="sec-h">
-        Entendemos o seu <span>cenário</span>
+        Mapeamento <span>inicial</span>
       </h2>
       <p className="sec-sub">
         Antes de qualquer proposta, mapeamos o ambiente, os desafios e as
@@ -551,9 +551,9 @@ function SoftwareIA() {
 
 function Cronograma() {
   const fases = [
-    ["1", "Plano Essencial", "até 3 meses", "Pesquisa de clima, diagnóstico da função de RH e pesquisa de salários, benefícios e remuneração."],
-    ["2", "Plano Estrutural", "até 6 meses", "Inclui desenvolvimento da estrutura de cargos, tabela salarial e descrições de cargos."],
-    ["3", "Plano Estratégico", "até 9 meses", "Abrange também o dimensionamento qualiquantitativo do quadro e a consolidação integrada dos resultados."],
+    ["1", "Plano Essencial", "3 meses", "Pesquisa de clima, diagnóstico da função de RH e pesquisa de salários, benefícios e remuneração."],
+    ["2", "Plano Estrutural", "6 meses", "Inclui desenvolvimento da estrutura de cargos, tabela salarial e descrições de cargos."],
+    ["3", "Plano Estratégico", "9 meses", "Abrange também o dimensionamento qualiquantitativo do quadro e a consolidação integrada dos resultados."],
   ];
   return (
     <section className="sec">
@@ -594,7 +594,7 @@ const PLANOS = [
     subtitulo: "Diagnóstico Integrado",
     foco: "Cobre os 4 escopos iniciais do briefing: clima, diagnóstico de RH e pesquisa de remuneração, com tabela salarial estruturada.",
     valor: "55.000",
-    prazo: "até 3 meses",
+    prazo: "3 meses",
     pagamento: "À vista com 5% de desconto, ou em até 3 parcelas mensais (1ª na assinatura).",
     itens: [
       "Pesquisa de clima organizacional para ~500 colaboradores",
@@ -615,7 +615,7 @@ const PLANOS = [
     subtitulo: "Cargos, Salários e Descrições",
     foco: "Inclui tudo do Plano Essencial e adiciona estrutura de cargos, tabela salarial hierarquizada e descrições de cargo para os ~150 cargos.",
     valor: "120.000",
-    prazo: "até 6 meses",
+    prazo: "6 meses",
     pagamento: "À vista com 8% de desconto, ou em até 6 parcelas mensais (1ª na assinatura).",
     destaque: true,
     itens: [
@@ -638,7 +638,7 @@ const PLANOS = [
     subtitulo: "Estrutura e Dimensionamento de Pessoal",
     foco: "Inclui tudo do Plano Estrutural e adiciona o dimensionamento qualiquantitativo do quadro nas unidades MG e Ponta Grossa/PR.",
     valor: "180.000",
-    prazo: "até 9 meses",
+    prazo: "9 meses",
     pagamento: "À vista com 10% de desconto, ou em até 9 parcelas mensais (1ª na assinatura).",
     itens: [
       "Tudo do Plano Estrutural",
