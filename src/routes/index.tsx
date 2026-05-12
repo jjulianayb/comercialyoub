@@ -674,15 +674,24 @@ function Investimento() {
 
         <div className="conds">
           {[
-            ["Condições de Pagamento", "50% na assinatura do contrato e 50% na entrega dos relatórios finais. Parcelamento disponível para projetos acima de R$ 85.000."],
-            ["Validade da Proposta", "Esta proposta tem validade de 30 dias a partir da data de emissão, sujeita à disponibilidade de agenda."],
-            ["Início do Projeto", "Em até 5 dias úteis após assinatura do contrato e confirmação do pagamento inicial."],
+            ["Investimento incluso", "Os valores contemplam todas as atividades de consultoria, uso do software youB e acesso aos dashboards com IA durante o período do projeto."],
+            ["Validade da proposta", "30 dias a partir da data de emissão, sujeita à disponibilidade de agenda."],
+            ["Início do projeto", "Em até 5 dias úteis após assinatura do contrato e confirmação do pagamento inicial."],
           ].map(([t, d]) => (
             <div key={t} className="cond-item">
               <div className="ct">{t}</div>
               <p>{d}</p>
             </div>
           ))}
+        </div>
+
+        <div className="logistica">
+          <span className="etit">Condições logísticas e premissas gerais</span>
+          <ul>
+            <li>Atividades presenciais nas unidades de MG e Ponta Grossa/PR serão planejadas previamente, otimizando agendas para reduzir custos logísticos.</li>
+            <li>Custos de deslocamento, hospedagem, alimentação e traslados locais da equipe de consultoria não estão inclusos nos honorários e serão de responsabilidade da contratante, conforme política interna da empresa.</li>
+            <li>Sempre que aplicável, as atividades poderão ser conduzidas em formato remoto, mantendo a qualidade técnica das entregas.</li>
+          </ul>
         </div>
       </div>
     </section>
