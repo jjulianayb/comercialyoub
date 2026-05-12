@@ -285,12 +285,37 @@ const lockCss = `
 }
 .proposta-locked a img { pointer-events: auto; }
 @media print {
-  .proposta-locked { display: none !important; }
-  body::before {
+  body:not(.printing) .proposta-locked { display: none !important; }
+  body:not(.printing)::before {
     content: "Documento confidencial — impressão desabilitada.";
     display: block; padding: 40px; font-family: sans-serif;
     font-size: 18px; color: #333;
   }
+  body.printing { background: #fff !important; }
+  body.printing .no-print { display: none !important; }
+  body.printing .proposta-locked,
+  body.printing .proposta-locked * {
+    -webkit-user-select: auto !important;
+    user-select: auto !important;
+  }
+  body.printing .proposta-locked img { pointer-events: auto !important; }
+  body.printing .sec,
+  body.printing .sec-soft,
+  body.printing .capa,
+  body.printing .plano,
+  body.printing section,
+  body.printing article {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  body.printing h1, body.printing h2, body.printing h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  body.printing .capa { min-height: auto !important; page-break-after: always; }
+  body.printing .planos { display: block !important; }
+  body.printing .plano { margin-bottom: 16px !important; }
+  @page { margin: 14mm; size: A4; }
 }
 `;
 
@@ -305,14 +330,30 @@ function Logo({ light = false }: { light?: boolean }) {
   );
 }
 
+function exportarPDF() {
+  if (typeof window === "undefined") return;
+  document.body.classList.add("printing");
+  const cleanup = () => {
+    document.body.classList.remove("printing");
+    window.removeEventListener("afterprint", cleanup);
+  };
+  window.addEventListener("afterprint", cleanup);
+  setTimeout(() => window.print(), 50);
+}
+
 function Capa() {
   return (
     <header className="capa">
       <nav className="capa-nav">
         <Logo light />
-        <a href={WHATSAPP} target="_blank" rel="noreferrer" className="btn-violet btn-sm">
-          Agendar Conversa
-        </a>
+        <div className="capa-nav-actions">
+          <button type="button" onClick={exportarPDF} className="btn-ghost-light btn-sm no-print">
+            ↓ Exportar PDF
+          </button>
+          <a href={WHATSAPP} target="_blank" rel="noreferrer" className="btn-violet btn-sm no-print">
+            Agendar Conversa
+          </a>
+        </div>
       </nav>
 
       <div className="capa-body">
@@ -1056,7 +1097,8 @@ const css = `
   background: radial-gradient(circle, oklch(0.65 0.22 295 / 0.25) 0%, transparent 70%);
   pointer-events: none;
 }
-.capa-nav { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 3; }
+.capa-nav { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 3; gap: 12px; }
+.capa-nav-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
 .capa-body { display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 3; max-width: 1080px; margin: 0 auto; width: 100%; padding: 60px 0; }
 .capa-titulo {
   font-size: clamp(40px, 6vw, 76px);
