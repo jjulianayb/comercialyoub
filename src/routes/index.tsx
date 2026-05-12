@@ -367,20 +367,20 @@ function Contexto() {
 
       <div className="ctx-box">
         <p>
-          Considerando uma operação com aproximadamente{" "}
-          <strong>500 colaboradores</strong>, distribuídos em múltiplas unidades
-          e com alta diversidade de cargos e funções, identificamos
-          oportunidades relevantes na estruturação de processos de RH,
-          eficiência organizacional e gestão estratégica de pessoas. A empresa
-          enfrenta um momento de crescimento que exige bases sólidas para
-          sustentar a escala com consistência e competitividade.
+          O Grupo SA opera com aproximadamente{" "}
+          <strong>500 colaboradores</strong>, distribuídos entre as unidades de{" "}
+          <strong>Minas Gerais</strong> e <strong>Ponta Grossa/PR</strong>, com
+          alta diversidade de cargos e funções. Esse contexto exige uma base
+          sólida de RH — clima, estrutura de cargos, remuneração e
+          dimensionamento — para sustentar o crescimento com consistência,
+          equidade interna e competitividade externa.
         </p>
         <div className="ctx-pills">
           {[
-            ["👥", "500+ colaboradores mapeados"],
-            ["🏢", "Múltiplas unidades"],
-            ["📊", "Alta diversidade de cargos"],
-            ["🚀", "Fase de crescimento acelerado"],
+            ["👥", "~500 colaboradores"],
+            ["🏢", "Unidades MG e Ponta Grossa/PR"],
+            ["📊", "~150 cargos mapeados"],
+            ["🚀", "Decisão prevista em 30 dias"],
           ].map(([i, t]) => (
             <span key={t} className="pill">
               <span>{i}</span>
@@ -392,9 +392,9 @@ function Contexto() {
 
       <div className="nums-grid">
         {[
-          ["6", "Frentes estratégicas identificadas"],
-          ["3", "Fases de transformação estruturadas"],
-          ["12–13", "Semanas de execução estimadas"],
+          ["3", "Planos comerciais estruturados"],
+          ["9", "Meses no escopo mais completo"],
+          ["1", "Software próprio com IA integrada"],
         ].map(([n, l]) => (
           <div key={l} className="num-card">
             <div className="n">{n}</div>
