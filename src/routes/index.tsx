@@ -763,7 +763,7 @@ function ConexaoValor() {
   ];
   return (
     <section className="sec">
-      <span className="eyebrow">06 — Lógica do investimento</span>
+      <span className="eyebrow">07 — Lógica do investimento</span>
       <h2 className="sec-h">
         Por que esse investimento <span>se paga</span>
       </h2>
