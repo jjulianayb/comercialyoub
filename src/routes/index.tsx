@@ -305,14 +305,30 @@ function Logo({ light = false }: { light?: boolean }) {
   );
 }
 
+function exportarPDF() {
+  if (typeof window === "undefined") return;
+  document.body.classList.add("printing");
+  const cleanup = () => {
+    document.body.classList.remove("printing");
+    window.removeEventListener("afterprint", cleanup);
+  };
+  window.addEventListener("afterprint", cleanup);
+  setTimeout(() => window.print(), 50);
+}
+
 function Capa() {
   return (
     <header className="capa">
       <nav className="capa-nav">
         <Logo light />
-        <a href={WHATSAPP} target="_blank" rel="noreferrer" className="btn-violet btn-sm">
-          Agendar Conversa
-        </a>
+        <div className="capa-nav-actions">
+          <button type="button" onClick={exportarPDF} className="btn-ghost-light btn-sm no-print">
+            ↓ Exportar PDF
+          </button>
+          <a href={WHATSAPP} target="_blank" rel="noreferrer" className="btn-violet btn-sm no-print">
+            Agendar Conversa
+          </a>
+        </div>
       </nav>
 
       <div className="capa-body">
