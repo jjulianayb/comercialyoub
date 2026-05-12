@@ -511,19 +511,19 @@ function Metodologia() {
 
 function Cronograma() {
   const fases = [
-    ["1", "Fase 1 — Diagnóstico", "3 a 4 semanas", "Imersão no ambiente da empresa: coleta de dados, entrevistas com lideranças, aplicação das pesquisas e mapeamento do estado atual dos processos de RH."],
-    ["2", "Fase 2 — Estruturação", "4 a 6 semanas", "Desenvolvimento das entregas contratadas: estrutura de cargos, tabelas salariais, benchmarking, descrições e dimensionamento — com validações intermediárias junto ao cliente."],
-    ["3", "Fase 3 — Implementação e Recomendações", "2 a 3 semanas", "Apresentação dos resultados finais, relatório executivo consolidado, plano de ação com prioridades e suporte para a área de RH iniciar a implantação com segurança."],
+    ["1", "Plano Essencial", "até 3 meses", "Pesquisa de clima, diagnóstico da função de RH e pesquisa de salários, benefícios e remuneração."],
+    ["2", "Plano Estrutural", "até 6 meses", "Inclui desenvolvimento da estrutura de cargos, tabela salarial e descrições de cargos."],
+    ["3", "Plano Estratégico", "até 9 meses", "Abrange também o dimensionamento qualiquantitativo do quadro e a consolidação integrada dos resultados."],
   ];
   return (
     <section className="sec">
-      <span className="eyebrow">05 — Cronograma</span>
+      <span className="eyebrow">05 — Prazos</span>
       <h2 className="sec-h">
-        Execução em <span>3 fases</span>
+        Prazos estimados de <span>execução</span>
       </h2>
       <p className="sec-sub">
-        Ritmo estruturado para garantir qualidade, alinhamento e entrega sem
-        surpresas.
+        Considerando disponibilidade de informações internas, agenda das
+        lideranças e aprovação das etapas intermediárias.
       </p>
       <div className="crono">
         {fases.map(([n, t, d, p], idx) => (
@@ -540,6 +540,10 @@ function Cronograma() {
           </div>
         ))}
       </div>
+      <p className="crono-nota">
+        O cronograma detalhado será alinhado na reunião de kick-off,
+        considerando o calendário interno e marcos relevantes do negócio.
+      </p>
     </section>
   );
 }
