@@ -1358,7 +1358,7 @@ const css = `
 .step.is-active { background: linear-gradient(135deg, rgba(124,58,237,.2), rgba(124,58,237,.08)); border-color: rgba(155,77,202,.4); }
 .step-n { font-size: 38px; font-weight: 800; color: var(--vglow); opacity: .4; margin-bottom: 18px; line-height: 1; }
 .step h4 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 10px; }
-.step p { font-size: 14px; color: rgba(255,255,255,.55); line-height: 1.7; }
+.step p { font-size: 14px; color: rgba(255,255,255,.82); line-height: 1.7; }
 
 .cta-box {
   background: linear-gradient(135deg, var(--v) 0%, #4c1d95 100%);
