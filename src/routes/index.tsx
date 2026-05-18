@@ -1125,10 +1125,10 @@ const css = `
   display: flex; align-items: center; justify-content: center;
   font-size: 20px;
 }
-.capa-empresa-detalhe { font-size: 11px; color: rgba(255,255,255,.5); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
+.capa-empresa-detalhe { font-size: 11px; color: rgba(255,255,255,.75); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
 .capa-empresa-nome { font-size: 18px; font-weight: 700; color: #fff; }
 .capa-footer { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 3; max-width: 1080px; margin: 0 auto; width: 100%; }
-.capa-meta { font-size: 11px; color: rgba(255,255,255,.35); letter-spacing: 0.1em; text-transform: uppercase; }
+.capa-meta { font-size: 11px; color: rgba(255,255,255,.65); letter-spacing: 0.1em; text-transform: uppercase; }
 
 /* sections base */
 .sec { padding: 110px 72px; max-width: 1080px; margin: 0 auto; }
@@ -1235,7 +1235,7 @@ const css = `
 .met-item:hover { border-color: var(--vglow); background: rgba(255,255,255,.06); }
 .met-num { font-size: 40px; font-weight: 800; color: var(--vglow); opacity: .35; margin-bottom: 14px; line-height: 1; }
 .met-item h4 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 8px; }
-.met-item p { font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.6; }
+.met-item p { font-size: 14px; color: rgba(255,255,255,.82); line-height: 1.65; }
 .met-desc {
   background: linear-gradient(135deg, rgba(124,58,237,.15) 0%, rgba(124,58,237,.05) 100%);
   border: 1px solid rgba(124,58,237,.25);
@@ -1358,7 +1358,7 @@ const css = `
 .step.is-active { background: linear-gradient(135deg, rgba(124,58,237,.2), rgba(124,58,237,.08)); border-color: rgba(155,77,202,.4); }
 .step-n { font-size: 38px; font-weight: 800; color: var(--vglow); opacity: .4; margin-bottom: 18px; line-height: 1; }
 .step h4 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 10px; }
-.step p { font-size: 14px; color: rgba(255,255,255,.55); line-height: 1.7; }
+.step p { font-size: 14px; color: rgba(255,255,255,.82); line-height: 1.7; }
 
 .cta-box {
   background: linear-gradient(135deg, var(--v) 0%, #4c1d95 100%);
@@ -1392,15 +1392,15 @@ footer {
   color: #fff;
 }
 .ft-brand { display: flex; flex-direction: column; gap: 8px; }
-.ft-tag { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,.3); }
+.ft-tag { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,.65); }
 .ft-info { text-align: right; }
-.ft-info p { font-size: 14px; color: rgba(255,255,255,.55); line-height: 1.9; margin: 0; }
+.ft-info p { font-size: 14px; color: rgba(255,255,255,.8); line-height: 1.9; margin: 0; }
 .ft-info a { color: var(--vglow); text-decoration: none; }
 .ft-info a:hover { color: #fff; }
 .ft-copy {
   grid-column: 1 / -1; text-align: center;
-  font-size: 12px; color: rgba(255,255,255,.25); letter-spacing: 0.05em;
-  border-top: 1px solid rgba(255,255,255,.05); padding-top: 24px; margin-top: 8px;
+  font-size: 12px; color: rgba(255,255,255,.55); letter-spacing: 0.05em;
+  border-top: 1px solid rgba(255,255,255,.1); padding-top: 24px; margin-top: 8px;
 }
 
 /* responsivo */
@@ -1473,9 +1473,9 @@ footer {
   .canais { padding: 56px 28px; }
 }
 
-.obj-lista { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
-.obj-lista li { position: relative; padding-left: 26px; font-size: 15px; color: #fff; line-height: 1.65; z-index: 2; }
-.obj-lista li::before { content: "→"; position: absolute; left: 0; top: 0; color: #fff; font-weight: 700; }
+.obj-lista { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; position: relative; z-index: 2; }
+.obj-lista li { position: relative; padding-left: 30px; font-size: 17px; color: #fff; line-height: 1.6; font-weight: 500; z-index: 2; }
+.obj-lista li::before { content: "→"; position: absolute; left: 0; top: 0; color: #fff; font-weight: 800; font-size: 18px; }
 
 .plano-pgto { font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; margin: 0 0 18px; padding: 10px 12px; background: rgba(124,58,237,.06); border-radius: 10px; border-left: 2px solid var(--v); }
 .plano.is-destaque .plano-pgto { background: rgba(255,255,255,.08); color: rgba(255,255,255,.85); border-left-color: rgba(255,255,255,.5); }
