@@ -704,7 +704,7 @@ const PLANOS = [
     ],
     entregaveis: [
       "Modelo de dimensionamento por unidade com simulações de cenário",
-      "Mapa de adequação quadro x estratégia",
+      "Mapa de adequação quadro vs. estratégia",
       "Visão completa da arquitetura de pessoas pronta para suportar crescimento",
     ],
     beneficios: [
@@ -954,7 +954,7 @@ function ProximosPassos() {
   return (
     <section className="sec-dark">
       <div className="sec-inner">
-        <span className="eyebrow eyebrow-light">09 — Próximos passos</span>
+        <span className="eyebrow eyebrow-light">10 — Próximos passos</span>
         <h2 className="sec-h is-light">
           Como avançar <span>a partir daqui</span>
         </h2>
