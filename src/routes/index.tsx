@@ -1125,10 +1125,10 @@ const css = `
   display: flex; align-items: center; justify-content: center;
   font-size: 20px;
 }
-.capa-empresa-detalhe { font-size: 11px; color: rgba(255,255,255,.5); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
+.capa-empresa-detalhe { font-size: 11px; color: rgba(255,255,255,.75); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
 .capa-empresa-nome { font-size: 18px; font-weight: 700; color: #fff; }
 .capa-footer { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 3; max-width: 1080px; margin: 0 auto; width: 100%; }
-.capa-meta { font-size: 11px; color: rgba(255,255,255,.35); letter-spacing: 0.1em; text-transform: uppercase; }
+.capa-meta { font-size: 11px; color: rgba(255,255,255,.65); letter-spacing: 0.1em; text-transform: uppercase; }
 
 /* sections base */
 .sec { padding: 110px 72px; max-width: 1080px; margin: 0 auto; }
