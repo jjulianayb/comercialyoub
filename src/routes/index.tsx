@@ -1235,7 +1235,7 @@ const css = `
 .met-item:hover { border-color: var(--vglow); background: rgba(255,255,255,.06); }
 .met-num { font-size: 40px; font-weight: 800; color: var(--vglow); opacity: .35; margin-bottom: 14px; line-height: 1; }
 .met-item h4 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 8px; }
-.met-item p { font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.6; }
+.met-item p { font-size: 14px; color: rgba(255,255,255,.82); line-height: 1.65; }
 .met-desc {
   background: linear-gradient(135deg, rgba(124,58,237,.15) 0%, rgba(124,58,237,.05) 100%);
   border: 1px solid rgba(124,58,237,.25);
