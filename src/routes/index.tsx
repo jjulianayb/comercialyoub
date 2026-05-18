@@ -1392,15 +1392,15 @@ footer {
   color: #fff;
 }
 .ft-brand { display: flex; flex-direction: column; gap: 8px; }
-.ft-tag { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,.3); }
+.ft-tag { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,.65); }
 .ft-info { text-align: right; }
-.ft-info p { font-size: 14px; color: rgba(255,255,255,.55); line-height: 1.9; margin: 0; }
+.ft-info p { font-size: 14px; color: rgba(255,255,255,.8); line-height: 1.9; margin: 0; }
 .ft-info a { color: var(--vglow); text-decoration: none; }
 .ft-info a:hover { color: #fff; }
 .ft-copy {
   grid-column: 1 / -1; text-align: center;
-  font-size: 12px; color: rgba(255,255,255,.25); letter-spacing: 0.05em;
-  border-top: 1px solid rgba(255,255,255,.05); padding-top: 24px; margin-top: 8px;
+  font-size: 12px; color: rgba(255,255,255,.55); letter-spacing: 0.05em;
+  border-top: 1px solid rgba(255,255,255,.1); padding-top: 24px; margin-top: 8px;
 }
 
 /* responsivo */
