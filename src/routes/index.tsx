@@ -704,7 +704,7 @@ const PLANOS = [
     ],
     entregaveis: [
       "Modelo de dimensionamento por unidade com simulações de cenário",
-      "Mapa de adequação quadro x estratégia",
+      "Mapa de adequação quadro vs. estratégia",
       "Visão completa da arquitetura de pessoas pronta para suportar crescimento",
     ],
     beneficios: [
