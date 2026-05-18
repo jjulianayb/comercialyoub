@@ -835,7 +835,7 @@ function ConexaoValor() {
     <section className="sec">
       <span className="eyebrow">07 — Lógica do investimento</span>
       <h2 className="sec-h">
-        Por que esse investimento <span>se paga</span>
+        Benefícios do <span>investimento</span>
       </h2>
       <p className="sec-sub">
         Cada entrega conecta a próxima. Não é uma soma de produtos avulsos —
