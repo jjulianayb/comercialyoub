@@ -661,7 +661,7 @@ const PLANOS = [
     nome: "Plano Estrutural",
     subtitulo: "Cargos, Salários e Descrições",
     foco: "Inclui tudo do Plano Essencial e adiciona estrutura de cargos, tabela salarial hierarquizada e descrições de cargo para os ~150 cargos.",
-    valor: "120.000",
+    valor: "162.000",
     prazo: "6 meses",
     pagamento: "À vista com 8% de desconto, ou em até 6 parcelas mensais (1ª na assinatura).",
     destaque: true,
@@ -671,6 +671,7 @@ const PLANOS = [
       "Organização em famílias e níveis (operacional, administrativo, liderança)",
       "Descrição de cargos: missão, responsabilidades, requisitos e relacionamentos",
       "Parametrização da estrutura no software youB com dashboards consolidados",
+      "Business Partner youB presente na empresa 2x por semana acompanhando o projeto",
     ],
     entregaveis: [
       "Estrutura de cargos e salários consistente e tecnicamente fundamentada",
