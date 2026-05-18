@@ -1474,8 +1474,8 @@ footer {
 }
 
 .obj-lista { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
-.obj-lista li { position: relative; padding-left: 26px; font-size: 15px; color: var(--ink-soft); line-height: 1.65; }
-.obj-lista li::before { content: "→"; position: absolute; left: 0; top: 0; color: var(--v); font-weight: 700; }
+.obj-lista li { position: relative; padding-left: 26px; font-size: 15px; color: #fff; line-height: 1.65; z-index: 2; }
+.obj-lista li::before { content: "→"; position: absolute; left: 0; top: 0; color: #fff; font-weight: 700; }
 
 .plano-pgto { font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; margin: 0 0 18px; padding: 10px 12px; background: rgba(124,58,237,.06); border-radius: 10px; border-left: 2px solid var(--v); }
 .plano.is-destaque .plano-pgto { background: rgba(255,255,255,.08); color: rgba(255,255,255,.85); border-left-color: rgba(255,255,255,.5); }
