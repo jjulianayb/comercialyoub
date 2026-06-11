@@ -1,7 +1,7 @@
 // Server-only helpers for the proposal access gate.
 // This file is server-only (`.server.ts`) and never reaches the client bundle.
 
-export const PROPOSAL_PASSWORD = "gruposa123";
+export const PROPOSAL_PASSWORD = "cliente";
 
 export const SESSION_CONFIG = {
   password:
