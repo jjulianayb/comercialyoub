@@ -8,6 +8,40 @@ export const Route = createFileRoute("/crm")({ component: CRM });
 type AnyRow = Record<string, any>;
 type View = "pipeline" | "proposals" | "followups";
 
+type GeneratedCredentials = { title: string; password: string };
+const PASSWORD_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+const PBKDF2_ITERATIONS = 120000;
+
+function generateProposalPassword() {
+ const bytes = new Uint8Array(12);
+ crypto.getRandomValues(bytes);
+ return Array.from(bytes, (byte) => PASSWORD_ALPHABET[byte % PASSWORD_ALPHABET.length]).join("");
+}
+
+function encodeBase64(bytes: Uint8Array) {
+ let binary = "";
+ bytes.forEach((byte) => { binary += String.fromCharCode(byte); });
+ return btoa(binary);
+}
+
+async function hashProposalPassword(password: string) {
+ const salt = new Uint8Array(16);
+ crypto.getRandomValues(salt);
+ const key = await crypto.subtle.importKey(
+ "raw",
+ new TextEncoder().encode(password),
+ "PBKDF2",
+ false,
+ ["deriveBits"],
+ );
+ const bits = await crypto.subtle.deriveBits(
+ { name: "PBKDF2", salt, iterations: PBKDF2_ITERATIONS, hash: "SHA-256" },
+ key,
+ 256,
+ );
+ return `pbkdf2$${encodeBase64(salt)}$${PBKDF2_ITERATIONS}$${encodeBase64(new Uint8Array(bits))}`;
+}
+
 const colors: Record<string, string> = {
  lead_novo: "#64748b",
  qualificado: "#0ea5e9",
@@ -47,6 +81,7 @@ function CRM() {
  const [newFollowupDate, setNewFollowupDate] = useState("");
  const [newFollowupChannel, setNewFollowupChannel] = useState("whatsapp");
  const [newFollowupNote, setNewFollowupNote] = useState("");
+ const [generatedCredentials, setGeneratedCredentials] = useState<GeneratedCredentials | null>(null);
 
  useEffect(() => {
  let alive = true;
@@ -130,6 +165,28 @@ function CRM() {
  if (nextError) setError(nextError.message); else setFollowups((all) => all.map((x) => x.id === item.id ? { ...x, done } : x));
  }
 
+ async function setProposalPassword(proposal: AnyRow) {
+ if (role !== "admin") return;
+ setBusy(true); setError("");
+ try {
+ const password = generateProposalPassword();
+ const access_password_hash = await hashProposalPassword(password);
+ const { error: nextError } = await (supabase as any)
+ .from("proposals")
+ .update({ access_password_hash })
+ .eq("id", proposal.id);
+ if (nextError) setError(nextError.message);
+ else {
+ setGeneratedCredentials({ title: proposal.title || "Proposta youB", password });
+ await loadData();
+ }
+ } catch {
+ setError("Não foi possível gerar a senha individual agora.");
+ } finally {
+ setBusy(false);
+ }
+ }
+
  const companyName = (id: string | null) => companies.find((x) => x.id === id)?.name ?? "Sem empresa";
  const ownerName = (id: string | null) => team.find((x) => x.id === id)?.full_name || team.find((x) => x.id === id)?.email || "Sem responsável";
  const visibleOpps = useMemo(() => opportunities.filter((x) => {
@@ -161,8 +218,9 @@ function CRM() {
  {showNew && <form onSubmit={createOpportunity} style={formCard}><div style={formTitle}>Nova oportunidade</div><div style={formGrid}><Field label="Nome da oportunidade"><input style={inputStyle} value={newTitle} onChange={(e) => setNewTitle(e.target.value)} placeholder="Ex.: Projeto de desenvolvimento de líderes" required /></Field><Field label="Valor estimado"><input style={inputStyle} value={newValue} onChange={(e) => setNewValue(e.target.value)} type="number" min="0" step="0.01" placeholder="R$ 0" /></Field><Field label="Origem"><select style={inputStyle} value={newSource} onChange={(e) => setNewSource(e.target.value)}>{SOURCES.map((x) => <option key={x}>{x}</option>)}</select></Field>{role === "admin" && <Field label="Responsável"><select style={inputStyle} value={newOwner} onChange={(e) => setNewOwner(e.target.value)}><option value="">Eu</option>{team.filter((x) => x.id !== session.user.id).map((x) => <option key={x.id} value={x.id}>{x.full_name || x.email}</option>)}</select></Field>}</div><button style={primaryButton} disabled={busy}>{busy ? "Salvando…" : "Salvar oportunidade"}</button></form>}
  <div style={tabsRow}><div style={tabs}>{([['pipeline','Funil'],['proposals','Propostas'],['followups','Follow-ups']] as [View,string][]).map(([key,label]) => <button key={key} onClick={() => setView(key)} style={view === key ? tabActive : tab}>{label}</button>)}</div><input style={searchStyle} value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar oportunidade…" /></div>
  {error && <div style={errorStyle}>{error}</div>}
+ {generatedCredentials && <div style={successStyle}><strong>Senha individual gerada:</strong> {generatedCredentials.title}<code style={credentialCode}>{generatedCredentials.password}</code><span>Copie agora — ela não será exibida novamente.</span><button style={closeNoticeButton} onClick={() => setGeneratedCredentials(null)}>Fechar</button></div>}
  {view === "pipeline" && <div style={kanban}>{STAGES.map((stage) => <div key={stage.value} style={columnStyle} onDragOver={(e) => e.preventDefault()} onDrop={(e) => { const id = e.dataTransfer.getData("text/plain"); if (id) moveOpportunity(id, stage.value); }}><div style={columnHeader}><span style={{...dotStyle, background: colors[stage.value]}} />{stage.label}<span style={countStyle}>{visibleOpps.filter((x) => x.stage === stage.value).length}</span></div>{visibleOpps.filter((x) => x.stage === stage.value).map((opp) => <article key={opp.id} draggable onDragStart={(e) => e.dataTransfer.setData("text/plain", opp.id)} style={cardStyle}><div style={cardTitle}>{opp.title}</div><div style={cardCompany}>{companyName(opp.company_id)}</div><div style={cardMeta}><strong>{brl(opp.estimated_value)}</strong><span>{opp.source || "—"}</span></div><div style={cardFooter}>👤 {ownerName(opp.owner_id)}</div></article>)}</div>)}</div>}
- {view === "proposals" && <section style={listCard}><div style={sectionTitle}>Propostas registradas <span>{proposals.length}</span></div>{proposals.length === 0 ? <Empty text="Nenhuma proposta cadastrada ainda." /> : proposals.map((p) => <div key={p.id} style={listRow}><div><strong>{p.title || "Proposta youB"}</strong><div style={muted}>Enviada em {dateBR(p.sent_at)} · versão {p.version || 1}</div></div><div style={listRight}><strong>{brl(p.value)}</strong><span style={statusBadge(p.status)}>{p.status || "rascunho"}</span><span style={muted}>Acesso até {dateBR(p.valid_until)}</span></div></div>)}</section>}
+ {view === "proposals" && <section style={listCard}><div style={sectionTitle}>Propostas registradas <span>{proposals.length}</span></div>{proposals.length === 0 ? <Empty text="Nenhuma proposta cadastrada ainda." /> : proposals.map((p) => <div key={p.id} style={listRow}><div><strong>{p.title || "Proposta youB"}</strong><div style={muted}>Enviada em {dateBR(p.sent_at)} · versão {p.version || 1}</div></div><div style={listRight}><strong>{brl(p.value)}</strong><span style={statusBadge(p.status)}>{p.status || "rascunho"}</span><span style={muted}>Acesso até {dateBR(p.valid_until)}</span>{role === "admin" && <button style={secondaryButton} disabled={busy} onClick={() => setProposalPassword(p)}>{p.access_password_hash ? "Gerar nova senha" : "Gerar senha individual"}</button>}</div></div>)}</section>}
  {view === "followups" && <section><form onSubmit={createFollowup} style={formCard}><div style={formTitle}>Agendar follow-up</div><div style={formGrid}><Field label="Oportunidade"><select style={inputStyle} value={newFollowupOpp} onChange={(e) => setNewFollowupOpp(e.target.value)} required><option value="">Selecione…</option>{visibleOpps.map((x) => <option key={x.id} value={x.id}>{x.title}</option>)}</select></Field><Field label="Data"><input style={inputStyle} type="date" value={newFollowupDate} onChange={(e) => setNewFollowupDate(e.target.value)} required /></Field><Field label="Canal"><select style={inputStyle} value={newFollowupChannel} onChange={(e) => setNewFollowupChannel(e.target.value)}>{CHANNELS.map((x) => <option key={x.value} value={x.value}>{x.label}</option>)}</select></Field><Field label="Próxima ação"><input style={inputStyle} value={newFollowupNote} onChange={(e) => setNewFollowupNote(e.target.value)} placeholder="Ex.: ligar para apresentar a nova versão" /></Field></div><button style={primaryButton} disabled={busy}>Agendar</button></form><section style={listCard}><div style={sectionTitle}>Minha agenda comercial <span>{pendingFollowups.length} pendentes</span></div>{followups.length === 0 ? <Empty text="Nenhum follow-up registrado." /> : followups.map((f) => <div key={f.id} style={{...listRow, opacity: f.done ? 0.55 : 1}}><label style={checkLabel}><input type="checkbox" checked={Boolean(f.done)} onChange={() => toggleFollowup(f)} /> <span>{f.done ? "Concluído" : "Pendente"}</span></label><div><strong>{opportunities.find((x) => x.id === f.opportunity_id)?.title || "Oportunidade"}</strong><div style={muted}>{dateBR(f.due_date)} · {CHANNELS.find((x) => x.value === f.channel)?.label || f.channel}</div></div><div style={listRight}><span style={f.due_date && new Date(`${f.due_date}T00:00:00`) < today && !f.done ? dangerBadge : statusBadge("enviada")}>{f.done ? "feito" : f.due_date && new Date(`${f.due_date}T00:00:00`) < today ? "atrasado" : "agendado"}</span><span style={muted}>{f.notes || "Sem observação"}</span></div></div>)}</section></section>}
  </main><footer style={footerStyle}>youB CRM · dados protegidos por autenticação e permissões do Supabase</footer>
  </div>;
@@ -222,6 +280,10 @@ const checkLabel: React.CSSProperties = { color: "#6d28d9", fontSize: 11, fontWe
 const statusBadge = (status: string): React.CSSProperties => ({ background: status === "aceita" ? "#dcfce7" : "#f3e8ff", color: status === "aceita" ? "#15803d" : "#6d28d9", borderRadius: 99, padding: "5px 9px", fontSize: 10, fontWeight: 800 });
 const dangerBadge: React.CSSProperties = { background: "#fee2e2", color: "#b91c1c", borderRadius: 99, padding: "5px 9px", fontSize: 10, fontWeight: 800 };
 const errorStyle: React.CSSProperties = { background: "#fff1f2", color: "#be123c", border: "1px solid #fecdd3", borderRadius: 9, padding: "10px 12px", margin: "12px 0", fontSize: 12 };
+const successStyle: React.CSSProperties = { display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", background: "#ecfdf5", color: "#166534", border: "1px solid #bbf7d0", borderRadius: 9, padding: "12px 14px", margin: "12px 0", fontSize: 12 };
+const credentialCode: React.CSSProperties = { background: "#fff", border: "1px solid #86efac", borderRadius: 7, padding: "7px 10px", color: "#14532d", fontWeight: 850, letterSpacing: 1.5 };
+const closeNoticeButton: React.CSSProperties = { marginLeft: "auto", border: 0, background: "transparent", color: "#166534", cursor: "pointer", fontWeight: 800 };
+const secondaryButton: React.CSSProperties = { border: "1px solid #c4b5fd", borderRadius: 8, padding: "7px 10px", background: "#fff", color: "#6d28d9", cursor: "pointer", fontSize: 11, fontWeight: 800 };
 const emptyStyle: React.CSSProperties = { padding: 30, textAlign: "center", color: "#938b9e", fontSize: 13 };
 const footerStyle: React.CSSProperties = { textAlign: "center", color: "#aaa2b2", fontSize: 11, padding: 20 };
 const loginPage: React.CSSProperties = { minHeight: "100vh", display: "grid", placeItems: "center", background: "radial-gradient(circle at 20% 0%, #ede9fe 0%, #faf9fc 42%, #f4effb 100%)", padding: 20, position: "relative", overflow: "hidden" };
