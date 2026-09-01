@@ -7,9 +7,7 @@ export const PROPOSAL_PASSWORD = (process.env.PROPOSAL_PASSWORD ?? "")
  .toLowerCase();
 
 export const SESSION_CONFIG = {
- password:
- process.env.PROPOSAL_SESSION_SECRET ??
- "configure-a-long-random-proposal-session-secret",
+ password: process.env.PROPOSAL_SESSION_SECRET ?? "",
  name: "youb_proposta_session",
  maxAge: 60 * 60 * 24 * 7, // 7 days
  cookie: {
