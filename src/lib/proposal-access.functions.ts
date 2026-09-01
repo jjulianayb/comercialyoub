@@ -7,7 +7,6 @@ import {
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import {
- PROPOSAL_PASSWORD,
  SESSION_CONFIG,
  type ProposalSession,
 } from "./proposal-access.server";
@@ -155,15 +154,13 @@ export const unlockProposal = createServerFn({ method: "POST" })
 
  const token = data.token ?? proposalTokenFromReferer();
  const proposal = token ? await findProposal(token) : null;
- if (token && (!proposal || isExpired(proposal))) {
+ if (!proposal || isExpired(proposal)) {
  await logAttempt(false);
  return { ok: false as const, reason: "expired" as const };
  }
 
- const ok = proposal?.access_password_hash
- ? await verifyProposalPassword(data.password, proposal.access_password_hash)
- : PROPOSAL_PASSWORD.length > 0 &&
- data.password.trim().toLowerCase() === PROPOSAL_PASSWORD;
+ const ok = Boolean(proposal.access_password_hash) &&
+ await verifyProposalPassword(data.password, proposal.access_password_hash!);
  await logAttempt(ok);
 
  if (!ok) {
@@ -174,7 +171,7 @@ export const unlockProposal = createServerFn({ method: "POST" })
  await session.update({
  unlocked: true,
  unlockedAt: Date.now(),
- proposalToken: token ?? undefined,
+ proposalToken: token,
  });
  return { ok: true as const };
  });
