@@ -63,10 +63,16 @@ async function logAttempt(success: boolean) {
  }
 }
 
-export const checkProposalAccess = createServerFn({ method: "GET" }).handler(
- async () => {
+export const checkProposalAccess = createServerFn({ method: "GET" })
+ .inputValidator((input) =>
+ z
+ .object({ token: z.string().min(8).max(64).optional() })
+ .optional()
+ .parse(input),
+ )
+ .handler(async ({ data }) => {
  const session = await useSession<ProposalSession>(SESSION_CONFIG);
- const token = proposalTokenFromReferer();
+ const token = data?.token ?? proposalTokenFromReferer();
 
  if (!token) {
  return { unlocked: session.data.unlocked === true, expired: false };
@@ -97,17 +103,21 @@ export const checkProposalAccess = createServerFn({ method: "GET" }).handler(
  sentAt: proposal.sent_at,
  validUntil: proposal.valid_until,
  };
- },
-);
+ });
 
 export const unlockProposal = createServerFn({ method: "POST" })
  .inputValidator((input) =>
- z.object({ password: z.string().min(1).max(128) }).parse(input),
+ z
+ .object({
+ password: z.string().min(1).max(128),
+ token: z.string().min(8).max(64).optional(),
+ })
+ .parse(input),
  )
  .handler(async ({ data }) => {
  await new Promise((r) => setTimeout(r, 350));
 
- const token = proposalTokenFromReferer();
+ const token = data.token ?? proposalTokenFromReferer();
  const proposal = token ? await findProposal(token) : null;
  if (token && (!proposal || isExpired(proposal))) {
  await logAttempt(false);
