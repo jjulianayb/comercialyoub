@@ -6,6 +6,7 @@ import {
   unlockProposal,
 } from "@/lib/proposal-access.functions";
 import { Proposta } from "@/components/proposta";
+import { getProposalMeta } from "@/lib/crm-public.functions";
 import { WHATSAPP } from "@/lib/brand";
 
 export const Route = createFileRoute("/")({
@@ -28,13 +29,36 @@ export const Route = createFileRoute("/")({
 function Gate() {
   const [unlocked, setUnlocked] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [expired, setExpired] = useState(false);
+  const [notFound, setNotFound] = useState(false);
+  const [sentAt, setSentAt] = useState<string | null>(null);
+  const [validUntil, setValidUntil] = useState<string | null>(null);
+  const [token] = useState<string | null>(() =>
+    typeof window === "undefined"
+      ? null
+      : new URLSearchParams(window.location.search).get("p"),
+  );
   const check = useServerFn(checkProposalAccess);
+  const getMeta = useServerFn(getProposalMeta);
 
   useEffect(() => {
     let alive = true;
-    check()
-      .then((r) => {
-        if (alive) setUnlocked(r.unlocked);
+    const metaRequest = token
+      ? getMeta({ data: { token } })
+      : Promise.resolve(null);
+
+    Promise.all([check(), metaRequest])
+      .then(([access, meta]) => {
+        if (!alive) return;
+        if (meta) {
+          setExpired(meta.found && meta.expired);
+          setNotFound(!meta.found);
+          if (meta.found) {
+            setSentAt(meta.sentAt);
+            setValidUntil(meta.validUntil);
+          }
+        }
+        setUnlocked(access.unlocked && !meta?.expired && meta?.found !== false);
       })
       .catch(() => {})
       .finally(() => {
@@ -43,12 +67,104 @@ function Gate() {
     return () => {
       alive = false;
     };
-  }, [check]);
+  }, [check, getMeta, token]);
 
   if (!checked) return <GateSkeleton />;
+  if (expired) return <ExpiredProposal validUntil={validUntil} />;
+  if (notFound) return <InvalidProposal />;
   if (!unlocked) return <Login onSuccess={() => setUnlocked(true)} />;
-  return <Proposta />;
+  return <ProposalContent sentAt={sentAt} validUntil={validUntil} />;
 }
+
+function ProposalContent({
+  sentAt,
+  validUntil,
+}: {
+  sentAt: string | null;
+  validUntil: string | null;
+}) {
+  const formatDate = (value: string | null) =>
+    value
+      ? new Intl.DateTimeFormat("pt-BR", { dateStyle: "long" }).format(
+          new Date(value),
+        )
+      : null;
+
+  return (
+    <>
+      {(sentAt || validUntil) && (
+        <div className="proposal-validity-bar">
+          <span>
+            Enviada em <strong>{formatDate(sentAt)}</strong>
+          </span>
+          {validUntil && (
+            <span>
+              Válida até <strong>{formatDate(validUntil)}</strong>
+            </span>
+          )}
+        </div>
+      )}
+      <Proposta />
+    </>
+  );
+}
+
+function ExpiredProposal({ validUntil }: { validUntil: string | null }) {
+  const date = validUntil
+    ? new Intl.DateTimeFormat("pt-BR", { dateStyle: "long" }).format(
+        new Date(validUntil),
+      )
+    : null;
+  return (
+    <div className="proposal-status-screen">
+      <div className="proposal-status-card">
+        <div className="proposal-status-icon">⏳</div>
+        <div className="gate-tag">Acesso encerrado</div>
+        <h1>Esta proposta expirou</h1>
+        <p>
+          {date
+            ? `O prazo de acesso terminou em ${date}.`
+            : "O prazo de acesso desta proposta terminou."}
+          {" "}Fale com a youB para solicitar uma renovação ou um novo link.
+        </p>
+        <a href={WHATSAPP} target="_blank" rel="noreferrer">
+          Falar com a youB <span>→</span>
+        </a>
+      </div>
+      <style>{statusCss}</style>
+    </div>
+  );
+}
+
+function InvalidProposal() {
+  return (
+    <div className="proposal-status-screen">
+      <div className="proposal-status-card">
+        <div className="proposal-status-icon">🔒</div>
+        <div className="gate-tag">Link não encontrado</div>
+        <h1>Não encontramos esta proposta</h1>
+        <p>Confira o link recebido ou fale com a youB para receber um novo acesso.</p>
+        <a href={WHATSAPP} target="_blank" rel="noreferrer">
+          Falar com a youB <span>→</span>
+        </a>
+      </div>
+      <style>{statusCss}</style>
+    </div>
+  );
+}
+
+const statusCss = `
+.proposal-status-screen { min-height:100vh; display:grid; place-items:center; padding:24px; color:#fff; background:radial-gradient(120% 80% at 80% 0%,#2a0f4d 0%,#15082a 45%,#0a0418 100%); font-family:Inter,system-ui,sans-serif; }
+.proposal-status-card { width:min(560px,100%); padding:48px; text-align:center; border:1px solid rgba(255,255,255,.12); border-radius:28px; background:rgba(255,255,255,.06); box-shadow:0 30px 90px -35px rgba(124,58,237,.7); }
+.proposal-status-icon { font-size:42px; margin-bottom:20px; }
+.proposal-status-card h1 { margin:20px 0 12px; font-size:clamp(28px,5vw,42px); line-height:1.1; }
+.proposal-status-card p { margin:0 auto 28px; max-width:430px; color:rgba(255,255,255,.7); line-height:1.65; }
+.proposal-status-card a { display:inline-flex; gap:10px; align-items:center; padding:15px 22px; border-radius:12px; color:#fff; text-decoration:none; font-weight:700; background:linear-gradient(90deg,#7C3AED,#C084FC); }
+.proposal-status-card a span { transition:transform .2s ease; }
+.proposal-status-card a:hover span { transform:translateX(4px); }
+.proposal-validity-bar { position:relative; z-index:10; display:flex; justify-content:center; gap:28px; flex-wrap:wrap; padding:10px 16px; color:#4c1d95; background:#f3e8ff; font:600 13px/1.4 Inter,system-ui,sans-serif; }
+@media (max-width:600px) { .proposal-status-card { padding:34px 24px; } }
+`;
 
 function GateSkeleton() {
   return (
