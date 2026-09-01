@@ -14,6 +14,242 @@ export type Database = {
   }
   public: {
     Tables: {
+      companies: {
+        Row: {
+          city: string | null
+          created_at: string
+          id: string
+          name: string
+          notes: string | null
+          owner_id: string
+          phone: string | null
+          segment: string | null
+          state: string | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          city?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          notes?: string | null
+          owner_id?: string
+          phone?: string | null
+          segment?: string | null
+          state?: string | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          city?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          notes?: string | null
+          owner_id?: string
+          phone?: string | null
+          segment?: string | null
+          state?: string | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      contacts: {
+        Row: {
+          company_id: string | null
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          notes: string | null
+          owner_id: string
+          phone: string | null
+          role_title: string | null
+          updated_at: string
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          owner_id?: string
+          phone?: string | null
+          role_title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          owner_id?: string
+          phone?: string | null
+          role_title?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contacts_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      followups: {
+        Row: {
+          channel: Database["public"]["Enums"]["followup_channel"]
+          created_at: string
+          done: boolean
+          done_at: string | null
+          due_date: string
+          id: string
+          next_action: string | null
+          notes: string | null
+          opportunity_id: string | null
+          owner_id: string
+          proposal_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          channel?: Database["public"]["Enums"]["followup_channel"]
+          created_at?: string
+          done?: boolean
+          done_at?: string | null
+          due_date: string
+          id?: string
+          next_action?: string | null
+          notes?: string | null
+          opportunity_id?: string | null
+          owner_id?: string
+          proposal_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          channel?: Database["public"]["Enums"]["followup_channel"]
+          created_at?: string
+          done?: boolean
+          done_at?: string | null
+          due_date?: string
+          id?: string
+          next_action?: string | null
+          notes?: string | null
+          opportunity_id?: string | null
+          owner_id?: string
+          proposal_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "followups_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "opportunities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "followups_proposal_id_fkey"
+            columns: ["proposal_id"]
+            isOneToOne: false
+            referencedRelation: "proposals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      opportunities: {
+        Row: {
+          closed_at: string | null
+          company_id: string | null
+          contact_id: string | null
+          created_at: string
+          estimated_value: number
+          expected_close_date: string | null
+          id: string
+          notes: string | null
+          owner_id: string
+          source: string | null
+          stage: Database["public"]["Enums"]["deal_stage"]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          closed_at?: string | null
+          company_id?: string | null
+          contact_id?: string | null
+          created_at?: string
+          estimated_value?: number
+          expected_close_date?: string | null
+          id?: string
+          notes?: string | null
+          owner_id?: string
+          source?: string | null
+          stage?: Database["public"]["Enums"]["deal_stage"]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          closed_at?: string | null
+          company_id?: string | null
+          contact_id?: string | null
+          created_at?: string
+          estimated_value?: number
+          expected_close_date?: string | null
+          id?: string
+          notes?: string | null
+          owner_id?: string
+          source?: string | null
+          stage?: Database["public"]["Enums"]["deal_stage"]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "opportunities_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "opportunities_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       proposal_access_log: {
         Row: {
           attempted_at: string
@@ -41,15 +277,116 @@ export type Database = {
         }
         Relationships: []
       }
+      proposals: {
+        Row: {
+          created_at: string
+          id: string
+          internal_notes: string | null
+          opportunity_id: string
+          owner_id: string
+          public_token: string
+          sent_at: string | null
+          status: Database["public"]["Enums"]["proposal_status"]
+          title: string | null
+          updated_at: string
+          valid_until: string | null
+          value: number
+          version: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          internal_notes?: string | null
+          opportunity_id: string
+          owner_id?: string
+          public_token?: string
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["proposal_status"]
+          title?: string | null
+          updated_at?: string
+          valid_until?: string | null
+          value?: number
+          version?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          internal_notes?: string | null
+          opportunity_id?: string
+          owner_id?: string
+          public_token?: string
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["proposal_status"]
+          title?: string | null
+          updated_at?: string
+          valid_until?: string | null
+          value?: number
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proposals_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "opportunities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "consultor"
+      deal_stage:
+        | "lead_novo"
+        | "qualificado"
+        | "reuniao"
+        | "proposta_elaboracao"
+        | "proposta_enviada"
+        | "follow_up"
+        | "negociacao"
+        | "ganha"
+        | "perdida"
+      followup_channel: "whatsapp" | "email" | "telefone" | "reuniao" | "outro"
+      proposal_status:
+        | "rascunho"
+        | "enviada"
+        | "expirada"
+        | "aceita"
+        | "recusada"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -176,6 +513,27 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "consultor"],
+      deal_stage: [
+        "lead_novo",
+        "qualificado",
+        "reuniao",
+        "proposta_elaboracao",
+        "proposta_enviada",
+        "follow_up",
+        "negociacao",
+        "ganha",
+        "perdida",
+      ],
+      followup_channel: ["whatsapp", "email", "telefone", "reuniao", "outro"],
+      proposal_status: [
+        "rascunho",
+        "enviada",
+        "expirada",
+        "aceita",
+        "recusada",
+      ],
+    },
   },
 } as const
