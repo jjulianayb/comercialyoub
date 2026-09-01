@@ -16,6 +16,7 @@ type ProposalRow = {
  sent_at: string | null;
  valid_until: string | null;
  status: string;
+ access_password_hash: string | null;
 };
 
 function proposalTokenFromReferer() {
@@ -41,10 +42,45 @@ function isExpired(row: ProposalRow) {
 async function findProposal(token: string): Promise<ProposalRow | null> {
  const { data, error } = await supabaseAdmin
  .from("proposals")
- .select("sent_at, valid_until, status")
+ .select("sent_at, valid_until, status, access_password_hash")
  .eq("public_token", token)
  .maybeSingle();
  return error || !data ? null : (data as ProposalRow);
+}
+
+function decodeBase64(value: string) {
+ const binary = atob(value);
+ return Uint8Array.from(binary, (char) => char.charCodeAt(0));
+}
+
+async function verifyProposalPassword(password: string, encoded: string) {
+ try {
+ const [algorithm, saltText, iterationsText, hashText] = encoded.split("$");
+ const iterations = Number(iterationsText);
+ if (algorithm !== "pbkdf2" || !saltText || !hashText || !Number.isInteger(iterations)) {
+ return false;
+ }
+ const key = await crypto.subtle.importKey(
+ "raw",
+ new TextEncoder().encode(password),
+ "PBKDF2",
+ false,
+ ["deriveBits"],
+ );
+ const bits = await crypto.subtle.deriveBits(
+ { name: "PBKDF2", salt: decodeBase64(saltText), iterations, hash: "SHA-256" },
+ key,
+ 256,
+ );
+ const actual = new Uint8Array(bits);
+ const expected = decodeBase64(hashText);
+ if (actual.length !== expected.length) return false;
+ let difference = 0;
+ for (let i = 0; i < actual.length; i += 1) difference |= actual[i] ^ expected[i];
+ return difference === 0;
+ } catch {
+ return false;
+ }
 }
 
 async function logAttempt(success: boolean) {
@@ -124,8 +160,9 @@ export const unlockProposal = createServerFn({ method: "POST" })
  return { ok: false as const, reason: "expired" as const };
  }
 
- const ok =
- PROPOSAL_PASSWORD.length > 0 &&
+ const ok = proposal?.access_password_hash
+ ? await verifyProposalPassword(data.password, proposal.access_password_hash)
+ : PROPOSAL_PASSWORD.length > 0 &&
  data.password.trim().toLowerCase() === PROPOSAL_PASSWORD;
  await logAttempt(ok);
 
