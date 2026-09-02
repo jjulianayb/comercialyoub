@@ -24,7 +24,7 @@ export const Route = createFileRoute("/")({
   component: Gate,
 });
 
-function Gate() {
+export function Gate({ initialToken }: { initialToken?: string } = {}) {
   const [unlocked, setUnlocked] = useState(false);
   const [checked, setChecked] = useState(false);
   const [expired, setExpired] = useState(false);
@@ -32,9 +32,10 @@ function Gate() {
   const [sentAt, setSentAt] = useState<string | null>(null);
   const [validUntil, setValidUntil] = useState<string | null>(null);
   const [token] = useState<string | null>(() =>
-    typeof window === "undefined"
+    initialToken ??
+    (typeof window === "undefined"
       ? null
-      : new URLSearchParams(window.location.search).get("p"),
+      : new URLSearchParams(window.location.search).get("p")),
   );
   const check = useServerFn(checkProposalAccess);
   const getMeta = useServerFn(getProposalMeta);
