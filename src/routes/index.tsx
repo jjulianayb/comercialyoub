@@ -6,7 +6,8 @@ import {
   unlockProposal,
 } from "@/lib/proposal-access.functions";
 import { Proposta } from "@/components/proposta";
-import { getProposalMeta } from "@/lib/crm-public.functions";
+import { PropostaInterativa, type PublicProposalContent } from "@/components/proposta-interativa";
+import { getProposalMeta, submitProposalResponse } from "@/lib/crm-public.functions";
 import { WHATSAPP } from "@/lib/brand";
 
 export const Route = createFileRoute("/")({
@@ -31,6 +32,7 @@ export function Gate({ initialToken }: { initialToken?: string } = {}) {
   const [notFound, setNotFound] = useState(false);
   const [sentAt, setSentAt] = useState<string | null>(null);
   const [validUntil, setValidUntil] = useState<string | null>(null);
+  const [publicContent, setPublicContent] = useState<PublicProposalContent | null>(null);
   const [token] = useState<string | null>(() =>
     initialToken ??
     (typeof window === "undefined"
@@ -39,6 +41,7 @@ export function Gate({ initialToken }: { initialToken?: string } = {}) {
   );
   const check = useServerFn(checkProposalAccess);
   const getMeta = useServerFn(getProposalMeta);
+  const submitResponse = useServerFn(submitProposalResponse);
 
   useEffect(() => {
     let alive = true;
@@ -46,7 +49,7 @@ export function Gate({ initialToken }: { initialToken?: string } = {}) {
       ? getMeta({ data: { token } })
       : Promise.resolve(null);
 
-    Promise.all([check(), metaRequest])
+    Promise.all([check({ data: token ? { token } : undefined }), metaRequest])
       .then(([access, meta]) => {
         if (!alive) return;
         if (meta) {
@@ -55,6 +58,7 @@ export function Gate({ initialToken }: { initialToken?: string } = {}) {
           if (meta.found) {
             setSentAt(meta.sentAt);
             setValidUntil(meta.validUntil);
+            setPublicContent(meta.publicContent?.template === "youb-proposal-v1" ? (meta.publicContent as PublicProposalContent) : null);
           }
         }
         setUnlocked(access.unlocked && !meta?.expired && meta?.found !== false);
@@ -72,15 +76,19 @@ export function Gate({ initialToken }: { initialToken?: string } = {}) {
   if (expired) return <ExpiredProposal validUntil={validUntil} />;
   if (notFound) return <InvalidProposal />;
   if (!unlocked) return <Login token={token} onSuccess={() => setUnlocked(true)} />;
-  return <ProposalContent sentAt={sentAt} validUntil={validUntil} />;
+  return <ProposalContent sentAt={sentAt} validUntil={validUntil} publicContent={publicContent} onResponse={(selectedPlan, comment) => submitResponse({ data: { token: token ?? "", selectedPlan, comment } }).then((result) => result.ok)} />;
 }
 
 function ProposalContent({
   sentAt,
   validUntil,
+  publicContent,
+  onResponse,
 }: {
   sentAt: string | null;
   validUntil: string | null;
+  publicContent: PublicProposalContent | null;
+  onResponse: (selectedPlan: string, comment: string) => Promise<boolean>;
 }) {
   const formatDate = (value: string | null) =>
     value
@@ -103,7 +111,7 @@ function ProposalContent({
           )}
         </div>
       )}
-      <Proposta />
+      {publicContent ? <PropostaInterativa content={publicContent} onResponse={onResponse} /> : <Proposta />}
     </>
   );
 }
