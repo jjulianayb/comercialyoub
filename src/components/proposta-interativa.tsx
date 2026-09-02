@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { propostaCss } from "@/components/proposta";
 
 export type ProposalPlan = {
   name: string;
@@ -53,7 +54,7 @@ export function PropostaInterativa({
   }
 
   return (
-    <div className="proposal-dynamic">
+    <div className="proposta proposta-locked proposal-dynamic">
       <header className="capa">
         <nav className="capa-nav"><strong className="proposal-brand-light">youB.</strong><span className="capa-meta">Documento confidencial</span></nav>
         <div className="capa-body">
@@ -77,11 +78,18 @@ export function PropostaInterativa({
 
       <section className="sec"><span className="eyebrow">06 — Investimento</span><h2 className="sec-h">Escolha o <span>plano ideal</span></h2><p className="sec-sub">Cada opção combina profundidade de implantação, desenvolvimento e tecnologia.</p><div className="planos">{content.plans.map((plan) => <article key={plan.name} className={`plano ${plan.featured ? "is-destaque" : ""}`}><span className="plano-badge">{plan.featured ? "★ Recomendado" : "Plano de implantação"}</span><h3>{plan.name}</h3><span className="plano-sub">{plan.subtitle}</span><p className="plano-foco">{plan.description}</p><div className="plano-preco"><span className="moeda">R$</span><span className="valor">{plan.price}</span></div><span className="plano-prazo">Prazo: {plan.period}</span><ul className="plano-lista">{plan.items.map((item) => <li key={item}>{item}</li>)}</ul></article>)}</div></section>
 
+      <section className="sec"><span className="eyebrow">06 — Jornada</span><h2 className="sec-h">Uma implantação em <span>ciclos</span></h2><p className="sec-sub">O escopo cresce com a maturidade da organização e a autonomia das lideranças.</p><div className="crono">{[["1","Essencial","3 meses","Diagnóstico, prioridades e início da jornada de líderes."],["2","Estrutural","6 meses","Modelo de DHO, formação, trilhas e base de competências."],["3","Estratégico","9 meses","Cultura, carreira, indicadores e consolidação na youB."]].map(([number,title,period,description],index)=><div key={number} className={`fase ${index===2?"is-last":""}`}><div className="fase-esq"><div className="fase-dot">{number}</div><div className="fase-line" /></div><div className="fase-body"><h4>{title}</h4><span className="fase-dur">{period}</span><p>{description}</p></div></div>)}</div></section>
+
+      <section className="sec-dark"><div className="sec-inner"><span className="eyebrow eyebrow-light">07 — Valor</span><h2 className="sec-h is-light">O investimento vira <span>capacidade</span></h2><p className="sec-sub is-light">Não é apenas treinamento: é um sistema de gestão que fica na organização.</p><div className="cv-grid">{[["01","Liderança preparada","Líderes mais seguros para conversar, direcionar e desenvolver pessoas."],["02","Cultura praticada","Princípios traduzidos em comportamentos, rituais e decisões do dia a dia."],["03","DHO sustentável","Processos, indicadores e tecnologia para a evolução continuar com autonomia."]].map(([number,title,description])=><article key={number} className="cv-card"><div className="cv-num">{number}</div><h3>{title}</h3><p>{description}</p></article>)}</div></div></section>
+
       <section className="sec-soft"><div className="sec-inner"><span className="eyebrow">07 — Continuidade</span><h2 className="sec-h">Plano <span>Enterprise</span></h2><p className="sec-sub">Depois da implantação, a Lagoapar pode manter o DHO ativo dentro da plataforma.</p><div className="ctx-box enterprise-box"><h3>R$ {content.enterprise.price} por mês</h3><p>{content.enterprise.description}</p><ul className="plano-lista">{content.enterprise.items.map((item) => <li key={item}>{item}</li>)}</ul></div></div></section>
 
       <section className="sec"><span className="eyebrow">08 — Sua decisão</span><h2 className="sec-h">Diga qual caminho faz mais <span>sentido</span></h2><p className="sec-sub">Selecione uma opção e deixe uma observação. Sua resposta será recebida pela equipe youB.</p><div className="response-card"><form onSubmit={submit}><fieldset disabled={sending || sent}><legend>Plano de maior interesse</legend>{[...content.plans.map((plan) => plan.name), "Plano Enterprise"].map((plan) => <label key={plan} className="response-option"><input type="radio" name="selectedPlan" value={plan} checked={selectedPlan === plan} onChange={() => setSelectedPlan(plan)} /><span>{plan}</span></label>)}<label className="response-comment">Comentário ou dúvida<textarea value={comment} onChange={(event) => setComment(event.target.value)} placeholder="Escreva uma observação para a youB…" maxLength={4000} /></label>{error && <div className="gate-error">{error}</div>}{sent ? <div className="response-success">Resposta registrada. A youB entrará em contato para os próximos passos.</div> : <button className="btn-violet" type="submit">{sending ? "Enviando…" : "Enviar minha preferência →"}</button>}</fieldset></form></div></section>
 
+      <section className="sec-soft"><div className="sec-inner"><span className="eyebrow">10 — A youB</span><h2 className="sec-h">Tecnologia para dar <span>continuidade</span></h2><div className="sobre-grid"><div className="sobre-txt"><p>A youB combina consultoria, desenvolvimento humano e tecnologia para transformar decisões de pessoas em uma prática contínua.</p><p>A plataforma apoia o registro das jornadas, a visibilidade dos indicadores e a evolução dos próximos ciclos.</p></div><div className="sobre-nums"><div className="sobre-num"><strong>+50</strong><span>empresas atendidas</span></div><div className="sobre-num"><strong>+5k</strong><span>líderes desenvolvidos</span></div></div></div></div></section>
+
       <section className="sec-dark"><div className="sec-inner"><span className="eyebrow eyebrow-light">09 — Premissas</span><h2 className="sec-h is-light">Condições e <span>próximos passos</span></h2><ul className="obj-lista">{content.logistics.map((item) => <li key={item}>{item}</li>)}</ul></div></section>
+      <style>{propostaCss}</style>
       <style>{dynamicCss}</style>
     </div>
   );
