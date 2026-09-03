@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import {
   checkProposalAccess,
   unlockProposal,
+  getProposalContent,
 } from "@/lib/proposal-access.functions";
 import { Proposta } from "@/components/proposta";
 import { PropostaInterativa, type PublicProposalContent } from "@/components/proposta-interativa";
@@ -41,6 +42,7 @@ export function Gate({ initialToken }: { initialToken?: string } = {}) {
   );
   const check = useServerFn(checkProposalAccess);
   const getMeta = useServerFn(getProposalMeta);
+  const getContent = useServerFn(getProposalContent);
   const submitResponse = useServerFn(submitProposalResponse);
 
   useEffect(() => {
@@ -58,10 +60,17 @@ export function Gate({ initialToken }: { initialToken?: string } = {}) {
           if (meta.found) {
             setSentAt(meta.sentAt);
             setValidUntil(meta.validUntil);
-            setPublicContent(meta.publicContent?.template === "youb-proposal-v1" ? (meta.publicContent as PublicProposalContent) : null);
           }
         }
-        setUnlocked(access.unlocked && !meta?.expired && meta?.found !== false);
+        const authorized = access.unlocked && !meta?.expired && meta?.found !== false;
+        setUnlocked(authorized);
+        if (authorized && token) {
+          getContent({ data: { token } }).then((content) => {
+            if (content.authorized && content.publicContent?.template === "youb-proposal-v1") {
+              setPublicContent(content.publicContent as PublicProposalContent);
+            }
+          }).catch(() => {});
+        }
       })
       .catch(() => {})
       .finally(() => {
@@ -70,12 +79,19 @@ export function Gate({ initialToken }: { initialToken?: string } = {}) {
     return () => {
       alive = false;
     };
-  }, [check, getMeta, token]);
+  }, [check, getMeta, getContent, token]);
 
   if (!checked) return <GateSkeleton />;
   if (expired) return <ExpiredProposal validUntil={validUntil} />;
   if (notFound) return <InvalidProposal />;
-  if (!unlocked) return <Login token={token} onSuccess={() => setUnlocked(true)} />;
+  const unlockSuccess = async () => {
+    if (token) {
+      const content = await getContent({ data: { token } });
+      if (content.authorized && content.publicContent?.template === "youb-proposal-v1") setPublicContent(content.publicContent as PublicProposalContent);
+    }
+    setUnlocked(true);
+  };
+  if (!unlocked) return <Login token={token} onSuccess={unlockSuccess} />;
   return <ProposalContent sentAt={sentAt} validUntil={validUntil} publicContent={publicContent} onResponse={(selectedPlan, comment) => submitResponse({ data: { token: token ?? "", selectedPlan, comment } }).then((result) => result.ok)} />;
 }
 
@@ -185,7 +201,7 @@ function GateSkeleton() {
   );
 }
 
-function Login({ token, onSuccess }: { token: string | null; onSuccess: () => void }) {
+function Login({ token, onSuccess }: { token: string | null; onSuccess: () => void | Promise<void> }) {
   const [pwd, setPwd] = useState("");
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
