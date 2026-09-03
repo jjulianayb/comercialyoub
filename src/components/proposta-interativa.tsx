@@ -14,6 +14,7 @@ export type ProposalPlan = {
 export type PublicProposalContent = {
   template: "youb-proposal-v1";
   companyName: string;
+  recipientName?: string;
   eyebrow: string;
   title: string;
   subtitle: string;
@@ -55,6 +56,7 @@ export function PropostaInterativa({
 
   return (
     <div className="proposta proposta-locked proposal-dynamic">
+      <div className="proposal-watermark" aria-hidden="true">{content.companyName} · {content.recipientName || "Documento confidencial"}</div>
       <header className="capa">
         <nav className="capa-nav"><strong className="proposal-brand-light">youB.</strong><span className="capa-meta">Documento confidencial</span></nav>
         <div className="capa-body">
@@ -95,4 +97,4 @@ export function PropostaInterativa({
   );
 }
 
-const dynamicCss = `.proposal-brand-light{font-size:25px;letter-spacing:-1.5px;color:#fff;font-weight:800}.proposal-dynamic .capa-nav{justify-content:space-between}.response-card{max-width:760px;margin:26px auto 0;padding:28px;border:1px solid #e8e1f2;border-radius:18px;background:#fff;box-shadow:0 16px 40px #25133612}.response-card fieldset{border:0;padding:0;margin:0}.response-card legend{font-size:15px;font-weight:800;color:#32134f;margin-bottom:15px}.response-option{display:flex;align-items:center;gap:10px;padding:13px 14px;margin:8px 0;border:1px solid #ded8eb;border-radius:10px;color:#30243c;font-weight:700;cursor:pointer}.response-option:has(input:checked){border-color:#7c3aed;background:#f5f0ff;color:#5b21b6}.response-option input{accent-color:#7c3aed}.response-comment{display:flex;flex-direction:column;gap:8px;margin:20px 0 14px;color:#5b5566;font-size:12px;font-weight:750}.response-comment textarea{min-height:120px;resize:vertical;border:1px solid #ded8eb;border-radius:10px;padding:12px;font:inherit;color:#292333}.response-success{padding:14px;border-radius:10px;background:#ecfdf5;border:1px solid #bbf7d0;color:#166534;font-weight:700}.enterprise-box h3{margin-top:0;color:#6d28d9}.enterprise-box .plano-lista{color:#30243c}.plano-badge{display:inline-block;margin-bottom:12px;color:#7c3aed;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px}@media(max-width:600px){.response-card{padding:20px}.proposal-dynamic .capa-titulo{font-size:34px}}`;
+const dynamicCss = `.proposal-watermark{position:fixed;inset:0;display:grid;place-items:center;transform:rotate(-26deg);font-size:clamp(34px,7vw,82px);font-weight:850;letter-spacing:4px;text-transform:uppercase;color:#6d28d9;opacity:.055;pointer-events:none;z-index:20;white-space:nowrap}.proposal-brand-light{font-size:25px;letter-spacing:-1.5px;color:#fff;font-weight:800}.proposal-dynamic .capa-nav{justify-content:space-between}.response-card{max-width:760px;margin:26px auto 0;padding:28px;border:1px solid #e8e1f2;border-radius:18px;background:#fff;box-shadow:0 16px 40px #25133612}.response-card fieldset{border:0;padding:0;margin:0}.response-card legend{font-size:15px;font-weight:800;color:#32134f;margin-bottom:15px}.response-option{display:flex;align-items:center;gap:10px;padding:13px 14px;margin:8px 0;border:1px solid #ded8eb;border-radius:10px;color:#30243c;font-weight:700;cursor:pointer}.response-option:has(input:checked){border-color:#7c3aed;background:#f5f0ff;color:#5b21b6}.response-option input{accent-color:#7c3aed}.response-comment{display:flex;flex-direction:column;gap:8px;margin:20px 0 14px;color:#5b5566;font-size:12px;font-weight:750}.response-comment textarea{min-height:120px;resize:vertical;border:1px solid #ded8eb;border-radius:10px;padding:12px;font:inherit;color:#292333}.response-success{padding:14px;border-radius:10px;background:#ecfdf5;border:1px solid #bbf7d0;color:#166534;font-weight:700}.enterprise-box h3{margin-top:0;color:#6d28d9}.enterprise-box .plano-lista{color:#30243c}.plano-badge{display:inline-block;margin-bottom:12px;color:#7c3aed;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px}@media(max-width:600px){.response-card{padding:20px}.proposal-dynamic .capa-titulo{font-size:34px}}`;
