@@ -63,13 +63,23 @@ export function Gate({ initialToken }: { initialToken?: string } = {}) {
           }
         }
         const authorized = access.unlocked && !meta?.expired && meta?.found !== false;
-        setUnlocked(authorized);
         if (authorized && token) {
+          // Do not render the protected template until its content has arrived.
+          // On a revisit, setting unlocked first caused a transient null render
+          // and the route error boundary showed “This page didn't load”.
           getContent({ data: { token } }).then((content) => {
+            if (!alive) return;
             if (content.authorized && content.publicContent?.template === "youb-proposal-v1") {
               setPublicContent(content.publicContent as PublicProposalContent);
+              setUnlocked(true);
+            } else {
+              setUnlocked(false);
             }
-          }).catch(() => {});
+          }).catch(() => {
+            if (alive) setUnlocked(false);
+          });
+        } else {
+          setUnlocked(false);
         }
       })
       .catch(() => {})
@@ -85,11 +95,12 @@ export function Gate({ initialToken }: { initialToken?: string } = {}) {
   if (expired) return <ExpiredProposal validUntil={validUntil} />;
   if (notFound) return <InvalidProposal />;
   const unlockSuccess = async () => {
-    if (token) {
-      const content = await getContent({ data: { token } });
-      if (content.authorized && content.publicContent?.template === "youb-proposal-v1") setPublicContent(content.publicContent as PublicProposalContent);
+    if (!token) return;
+    const content = await getContent({ data: { token } });
+    if (content.authorized && content.publicContent?.template === "youb-proposal-v1") {
+      setPublicContent(content.publicContent as PublicProposalContent);
+      setUnlocked(true);
     }
-    setUnlocked(true);
   };
   if (!unlocked) return <Login token={token} onSuccess={unlockSuccess} />;
   return <ProposalContent sentAt={sentAt} validUntil={validUntil} publicContent={publicContent} onResponse={(selectedPlan, comment) => submitResponse({ data: { token: token ?? "", selectedPlan, comment } }).then((result) => result.ok)} />;
