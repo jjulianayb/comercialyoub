@@ -809,7 +809,7 @@ function Rodape() {
 
 /* ───────── CSS ───────── */
 
-const css = `
+export const propostaCss = `
 .proposta {
   --v: var(--youb-violet);
   --vs: var(--youb-violet-strong);
