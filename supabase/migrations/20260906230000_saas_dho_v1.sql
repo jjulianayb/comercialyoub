@@ -169,6 +169,16 @@ end; $$;
 drop trigger if exists trg_validate_saas_proposal_v1 on public.proposals;
 create trigger trg_validate_saas_proposal_v1 before insert or update of commercial_model,headcount,plan_code,manual_monthly,setup_bonus_percent,setup_adjustment,contract_months,commercial_justification on public.proposals for each row execute function public.validate_saas_proposal_v1();
 
+create or replace function public.prevent_saas_snapshot_mutation() returns trigger language plpgsql security definer set search_path=public as $$
+begin
+  if old.commercial_model = 'saas_dho_v1' and (
+    new.commercial_model is distinct from old.commercial_model or new.plan_code is distinct from old.plan_code or new.headcount is distinct from old.headcount or new.headcount_band is distinct from old.headcount_band or new.pricing_matrix_id is distinct from old.pricing_matrix_id or new.reference_monthly is distinct from old.reference_monthly or new.manual_monthly is distinct from old.manual_monthly or new.discount_percent is distinct from old.discount_percent or new.discount_amount is distinct from old.discount_amount or new.final_monthly is distinct from old.final_monthly or new.contract_months is distinct from old.contract_months or new.mrr is distinct from old.mrr or new.arr is distinct from old.arr or new.tcv is distinct from old.tcv or new.setup_list_price is distinct from old.setup_list_price or new.setup_bonus_percent is distinct from old.setup_bonus_percent or new.setup_adjustment is distinct from old.setup_adjustment or new.setup_discount_amount is distinct from old.setup_discount_amount or new.setup_final_price is distinct from old.setup_final_price or new.commercial_alert_level is distinct from old.commercial_alert_level or new.commercial_justification is distinct from old.commercial_justification or new.public_content is distinct from old.public_content
+  ) then raise exception 'saas_proposal_snapshot_immutable'; end if;
+  return new;
+end; $$;
+drop trigger if exists trg_saas_snapshot_immutable on public.proposals;
+create trigger trg_saas_snapshot_immutable before update of commercial_model,plan_code,headcount,headcount_band,pricing_matrix_id,reference_monthly,manual_monthly,discount_percent,discount_amount,final_monthly,contract_months,mrr,arr,tcv,setup_list_price,setup_bonus_percent,setup_adjustment,setup_discount_amount,setup_final_price,commercial_alert_level,commercial_justification,public_content on public.proposals for each row execute function public.prevent_saas_snapshot_mutation();
+
 alter table public.saas_plans enable row level security;
 alter table public.saas_plan_modules enable row level security;
 alter table public.saas_pricing_matrix enable row level security;
