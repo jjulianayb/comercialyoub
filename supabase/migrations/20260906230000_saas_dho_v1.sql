@@ -46,6 +46,8 @@ create table if not exists public.saas_implementation_pricing (
   active boolean not null default true,
   check (max_headcount is null or max_headcount >= min_headcount)
 );
+create unique index if not exists ux_saas_pricing_band_valid_from on public.saas_pricing_matrix (min_headcount, coalesce(max_headcount,-1), valid_from);
+create unique index if not exists ux_saas_setup_band on public.saas_implementation_pricing (min_headcount, coalesce(max_headcount,-1));
 
 alter table public.proposal_services add column if not exists service_scope text not null default 'professional_legacy';
 alter table public.proposal_line_items add column if not exists plan_code text;
@@ -113,7 +115,8 @@ on conflict (plan_code,module_key) do update set module_name=excluded.module_nam
 insert into public.saas_pricing_matrix (min_headcount,max_headcount,structural_monthly,strategic_monthly)
 values
  (1,100,5900,8900),(101,300,7900,11900),(301,500,9900,14900),
- (501,1000,12900,18900),(1001,2500,16900,24900),(2501,null,null,null);
+ (501,1000,12900,18900),(1001,2500,16900,24900),(2501,null,null,null)
+on conflict do nothing;
 
 insert into public.saas_implementation_pricing (min_headcount,max_headcount,list_price)
 values (1,300,3500),(301,1000,5000),(1001,2500,7500),(2501,null,null);
