@@ -16,7 +16,7 @@ export const DEFAULT_PROPOSAL_CONTENT: PublicProposalContent = {
   software: [["01", "Base de pessoas", "Organização de públicos, avaliações, jornadas e histórico."], ["02", "Visibilidade executiva", "Dashboards e relatórios para decisões de pessoas."], ["03", "Inteligência", "Analytics, potencial e evolução em uma visão integrada."], ["04", "Continuidade", "A plataforma mantém o DHO vivo entre os ciclos."]],
   plans: [],
   enterprise: { price: "Sob consulta", description: "Integre e escale a arquitetura de pessoas com governança, integrações e condições técnicas específicas.", items: ["API / Integration Hub", "SSO e governança avançada", "Multiempresa e múltiplas unidades", "Integrações e customizações sob consulta", "SLA e arquitetura específicos"] },
-  logistics: ["Vigência contratual padrão de 12 meses.", "A implantação é onboarding do SaaS, não consultoria profissional.", "A mensalidade corresponde aos colaboradores cobertos pelo contrato.", "A seleção de plano demonstra interesse comercial e não representa aceite contratual."],
+  logistics: ["Vigência contratual padrão de 12 meses.", "A implantação é onboarding e setup da plataforma SaaS.", "A mensalidade corresponde aos colaboradores cobertos pelo contrato.", "A seleção de plano demonstra interesse comercial e não representa aceite contratual."],
   validity: "Vigência padrão de 12 meses",
 };
 
