@@ -119,7 +119,8 @@ values
 on conflict do nothing;
 
 insert into public.saas_implementation_pricing (min_headcount,max_headcount,list_price)
-values (1,300,3500),(301,1000,5000),(1001,2500,7500),(2501,null,null);
+values (1,300,3500),(301,1000,5000),(1001,2500,7500),(2501,null,null)
+on conflict do nothing;
 
 -- Desativa apenas a participação dos serviços profissionais na oferta padrão.
 -- Nenhuma linha histórica é apagada.
