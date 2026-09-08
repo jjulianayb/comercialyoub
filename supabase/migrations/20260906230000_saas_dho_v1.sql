@@ -35,7 +35,7 @@ create table if not exists public.saas_pricing_matrix (
   valid_from date not null default current_date,
   valid_until date,
   check (max_headcount is null or max_headcount >= min_headcount),
-  check (structural_monthly is not null or strategic_monthly is not null)
+  check ((max_headcount is null and structural_monthly is null and strategic_monthly is null) or structural_monthly is not null or strategic_monthly is not null)
 );
 
 create table if not exists public.saas_implementation_pricing (
@@ -143,14 +143,14 @@ begin
   select * into s from public.saas_implementation_pricing where active and p_headcount >= min_headcount and (max_headcount is null or p_headcount <= max_headcount) order by min_headcount desc limit 1;
   band := case when m.max_headcount is null then 'Acima de '||m.min_headcount else case when m.min_headcount=1 then 'Até '||m.max_headcount else m.min_headcount||'–'||m.max_headcount end end;
   if p_plan_code='enterprise' then
-    return jsonb_build_object('plan_code',p_plan_code,'headcount',p_headcount,'headcount_band',band,'pricing_matrix_id',m.id,'reference_monthly',null,'manual_monthly',null,'discount_percent',0,'discount_amount',0,'final_monthly',null,'contract_months',p_contract_months,'mrr',null,'arr',null,'setup_list_price',s.list_price,'setup_bonus_percent',p_setup_bonus_percent,'setup_adjustment',coalesce(p_setup_adjustment,0),'setup_discount_amount',coalesce(s.list_price,0)*p_setup_bonus_percent/100,'setup_final_price',case when s.list_price is null then null else greatest(0,s.list_price-(s.list_price*p_setup_bonus_percent/100)+coalesce(p_setup_adjustment,0)) end,'commercial_alert_level','quote','pricing_status','sob_consulta');
+    return jsonb_build_object('plan_code',p_plan_code,'headcount',p_headcount,'headcount_band',band,'pricing_matrix_id',m.id,'reference_monthly',null,'manual_monthly',null,'discount_percent',0,'discount_amount',0,'final_monthly',null,'contract_months',p_contract_months,'mrr',null,'arr',null,'tcv',null,'setup_pricing_id',s.id,'setup_list_price',s.list_price,'setup_bonus_percent',p_setup_bonus_percent,'setup_adjustment',coalesce(p_setup_adjustment,0),'setup_discount_amount',coalesce(s.list_price,0)*p_setup_bonus_percent/100,'setup_final_price',case when s.list_price is null then null else greatest(0,s.list_price-(s.list_price*p_setup_bonus_percent/100)+coalesce(p_setup_adjustment,0)) end,'commercial_alert_level','quote','pricing_status','sob_consulta');
   end if;
   ref := case when p_plan_code='estrutural' then m.structural_monthly else m.strategic_monthly end;
   if ref is null then raise exception 'pricing_not_available'; end if;
   final_value := greatest(0,coalesce(p_manual_monthly,ref)); discount := greatest(0,ref-final_value);
   if discount/ref*100 > 20 then alert := 'critical'; elsif discount/ref*100 >= 10 then alert := 'warning'; elsif discount > 0 then alert := 'info'; end if;
   setup_final := case when s.list_price is null then null else greatest(0,s.list_price-(s.list_price*p_setup_bonus_percent/100)+coalesce(p_setup_adjustment,0)) end;
-  return jsonb_build_object('plan_code',p_plan_code,'headcount',p_headcount,'headcount_band',band,'pricing_matrix_id',m.id,'reference_monthly',ref,'manual_monthly',p_manual_monthly,'discount_percent',round((discount/ref*100)::numeric,2),'discount_amount',discount,'final_monthly',final_value,'contract_months',p_contract_months,'mrr',final_value,'arr',final_value*12,'tcv',final_value*p_contract_months+coalesce(setup_final,0),'setup_list_price',s.list_price,'setup_bonus_percent',p_setup_bonus_percent,'setup_adjustment',coalesce(p_setup_adjustment,0),'setup_discount_amount',case when s.list_price is null then null else s.list_price-setup_final end,'setup_final_price',setup_final,'commercial_alert_level',alert,'pricing_status','calculated');
+  return jsonb_build_object('plan_code',p_plan_code,'headcount',p_headcount,'headcount_band',band,'pricing_matrix_id',m.id,'reference_monthly',ref,'manual_monthly',p_manual_monthly,'discount_percent',round((discount/ref*100)::numeric,2),'discount_amount',discount,'final_monthly',final_value,'contract_months',p_contract_months,'mrr',final_value,'arr',final_value*12,'tcv',final_value*p_contract_months+coalesce(setup_final,0),'setup_pricing_id',s.id,'setup_list_price',s.list_price,'setup_bonus_percent',p_setup_bonus_percent,'setup_adjustment',coalesce(p_setup_adjustment,0),'setup_discount_amount',case when s.list_price is null then null else s.list_price-setup_final end,'setup_final_price',setup_final,'commercial_alert_level',alert,'pricing_status','calculated');
 end; $$;
 
 grant execute on function public.calculate_saas_quote_v1(integer,text,numeric,numeric,numeric,integer) to authenticated;
@@ -160,7 +160,7 @@ declare q jsonb;
 begin
   if new.commercial_model <> 'saas_dho_v1' then return new; end if;
   q := public.calculate_saas_quote_v1(new.headcount,new.plan_code,new.manual_monthly,new.setup_bonus_percent,new.setup_adjustment,new.contract_months);
-  new.headcount_band := q->>'headcount_band'; new.pricing_matrix_id := (q->>'pricing_matrix_id')::uuid;
+  new.headcount_band := q->>'headcount_band'; new.pricing_matrix_id := (q->>'pricing_matrix_id')::uuid; new.setup_pricing_id := (q->>'setup_pricing_id')::uuid;
   new.reference_monthly := nullif(q->>'reference_monthly','')::numeric; new.discount_percent := coalesce((q->>'discount_percent')::numeric,0); new.discount_amount := coalesce((q->>'discount_amount')::numeric,0); new.final_monthly := nullif(q->>'final_monthly','')::numeric; new.mrr := nullif(q->>'mrr','')::numeric; new.arr := nullif(q->>'arr','')::numeric; new.tcv := nullif(q->>'tcv','')::numeric; new.setup_list_price := nullif(q->>'setup_list_price','')::numeric; new.setup_discount_amount := nullif(q->>'setup_discount_amount','')::numeric; new.setup_final_price := nullif(q->>'setup_final_price','')::numeric; new.commercial_alert_level := q->>'commercial_alert_level'; new.pricing_status := q->>'pricing_status';
   if new.commercial_alert_level in ('warning','critical') and nullif(trim(new.commercial_justification),'') is null then raise exception 'commercial_justification_required'; end if;
   return new;
