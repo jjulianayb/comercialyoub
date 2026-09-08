@@ -9,61 +9,80 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as CrmRouteImport } from './routes/crm'
 import { Route as IndexRouteImport } from './routes/index'
 
+const CrmRoute = CrmRouteImport.update({
+ id: '/crm',
+ path: '/crm',
+ getParentRoute: () => rootRouteImport,
+} as any)
+
 const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
+ id: '/',
+ path: '/',
+ getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+ '/': typeof IndexRoute
+ '/crm': typeof CrmRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+ '/': typeof IndexRoute
+ '/crm': typeof CrmRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+ __root__: typeof rootRouteImport
+ '/': typeof IndexRoute
+ '/crm': typeof CrmRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
-  fileRoutesById: FileRoutesById
+ fileRoutesByFullPath: FileRoutesByFullPath
+ fullPaths: '/' | '/crm'
+ fileRoutesByTo: FileRoutesByTo
+ to: '/' | '/crm'
+ id: '__root__' | '/' | '/crm'
+ fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+ CrmRoute: typeof CrmRoute
+ IndexRoute: typeof IndexRoute
 }
 
 declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-  }
+ interface FileRoutesByPath {
+ '/crm': {
+ id: '/crm'
+ path: '/crm'
+ fullPath: '/crm'
+ preLoaderRoute: typeof CrmRouteImport
+ parentRoute: typeof rootRouteImport
+ }
+ '/': {
+ id: '/'
+ path: '/'
+ fullPath: '/'
+ preLoaderRoute: typeof IndexRouteImport
+ parentRoute: typeof rootRouteImport
+ }
+ }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+ CrmRoute: CrmRoute,
+ IndexRoute: IndexRoute,
 }
 export const routeTree = rootRouteImport
-  ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+ ._addFileChildren(rootRouteChildren)
+ ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
 import type { startInstance } from './start.ts'
 declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
+ interface Register {
+ ssr: true
+ router: Awaited<ReturnType<typeof getRouter>>
+ config: Awaited<ReturnType<typeof startInstance.getOptions>>
+ }
 }
