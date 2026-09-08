@@ -145,7 +145,7 @@ begin
   if p_setup_bonus_percent not in (0,25,50,75,100) then raise exception 'setup_bonus_invalid'; end if;
   select * into m from public.saas_pricing_matrix where active and p_headcount >= min_headcount and (max_headcount is null or p_headcount <= max_headcount) order by min_headcount desc limit 1;
   select * into s from public.saas_implementation_pricing where active and p_headcount >= min_headcount and (max_headcount is null or p_headcount <= max_headcount) order by min_headcount desc limit 1;
-  band := case when m.max_headcount is null then 'Acima de '||m.min_headcount else case when m.min_headcount=1 then 'Até '||m.max_headcount else m.min_headcount||'–'||m.max_headcount end end;
+  band := case when m.max_headcount is null then 'Acima de 2.500' else case when m.min_headcount=1 then 'Até '||m.max_headcount else m.min_headcount||'–'||m.max_headcount end end;
   if p_plan_code='enterprise' then
     return jsonb_build_object('plan_code',p_plan_code,'headcount',p_headcount,'headcount_band',band,'pricing_matrix_id',m.id,'reference_monthly',null,'manual_monthly',null,'discount_percent',0,'discount_amount',0,'final_monthly',null,'contract_months',p_contract_months,'mrr',null,'arr',null,'tcv',null,'setup_pricing_id',s.id,'setup_list_price',s.list_price,'setup_bonus_percent',p_setup_bonus_percent,'setup_adjustment',coalesce(p_setup_adjustment,0),'setup_discount_amount',coalesce(s.list_price,0)*p_setup_bonus_percent/100,'setup_final_price',case when s.list_price is null then null else greatest(0,s.list_price-(s.list_price*p_setup_bonus_percent/100)+coalesce(p_setup_adjustment,0)) end,'commercial_alert_level','quote','pricing_status','sob_consulta');
   end if;
